@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,11 +28,104 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="BzW-OI-qvv"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="5rX-Zd-nsy"/>
                             </scrollView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fa0-z6-BdC">
-                                <rect key="frame" x="0.0" y="331" width="414" height="578"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rH6-9o-P34">
+                                <rect key="frame" x="0.0" y="338" width="414" height="558"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="linkColor"/>
-                            </view>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8Xn-K0-WbU">
+                                    <size key="itemSize" width="266" height="313"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="webtoon thumnail" id="kqV-x1-PVY" customClass="WebToonCollectionViewCell" customModule="WebToon" customModuleProvider="target">
+                                        <rect key="frame" x="74" y="0.0" width="266" height="313"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OXm-ln-aUO">
+                                            <rect key="frame" x="0.0" y="0.0" width="266" height="313"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K1v-HE-JJK">
+                                                    <rect key="frame" x="0.0" y="0.0" width="266" height="215"/>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jIc-cb-Vc3">
+                                                    <rect key="frame" x="0.0" y="215" width="266" height="98"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="bbZ-Hc-rFI">
+                                                            <rect key="frame" x="0.0" y="0.0" width="266" height="98"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7K-Xh-Ljz">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="266" height="33.5"/>
+                                                                    <attributedString key="attributedText">
+                                                                        <fragment content="Label">
+                                                                            <attributes>
+                                                                                <font key="NSFont" metaFont="system"/>
+                                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="5" tighteningFactorForTruncation="0.0"/>
+                                                                            </attributes>
+                                                                        </fragment>
+                                                                    </attributedString>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKx-Xt-G0N">
+                                                                    <rect key="frame" x="0.0" y="34.5" width="266" height="29"/>
+                                                                    <attributedString key="attributedText">
+                                                                        <fragment content="Label">
+                                                                            <attributes>
+                                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                <font key="NSFont" metaFont="system" size="11"/>
+                                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="5" tighteningFactorForTruncation="0.0"/>
+                                                                            </attributes>
+                                                                        </fragment>
+                                                                    </attributedString>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jl0-Wz-Fj0">
+                                                                    <rect key="frame" x="0.0" y="64.5" width="266" height="33.5"/>
+                                                                    <attributedString key="attributedText">
+                                                                        <fragment content="Label">
+                                                                            <attributes>
+                                                                                <font key="NSFont" metaFont="system" size="12"/>
+                                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="5" tighteningFactorForTruncation="0.0"/>
+                                                                            </attributes>
+                                                                        </fragment>
+                                                                    </attributedString>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="bbZ-Hc-rFI" secondAttribute="trailing" id="8fR-F5-Smb"/>
+                                                        <constraint firstItem="bbZ-Hc-rFI" firstAttribute="top" secondItem="jIc-cb-Vc3" secondAttribute="top" id="B2I-Ut-Nlh"/>
+                                                        <constraint firstAttribute="bottom" secondItem="bbZ-Hc-rFI" secondAttribute="bottom" id="HsL-fW-bs7"/>
+                                                        <constraint firstItem="bbZ-Hc-rFI" firstAttribute="leading" secondItem="jIc-cb-Vc3" secondAttribute="leading" id="d6p-pL-bAP"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="K1v-HE-JJK" firstAttribute="height" secondItem="jIc-cb-Vc3" secondAttribute="height" multiplier="2.2" id="3m4-xX-Wtf"/>
+                                                <constraint firstItem="K1v-HE-JJK" firstAttribute="top" secondItem="OXm-ln-aUO" secondAttribute="top" id="8e0-vu-i5a"/>
+                                                <constraint firstAttribute="trailing" secondItem="K1v-HE-JJK" secondAttribute="trailing" id="L58-mi-P7c"/>
+                                                <constraint firstAttribute="bottom" secondItem="jIc-cb-Vc3" secondAttribute="bottom" id="Mbc-7I-5jc"/>
+                                                <constraint firstAttribute="trailing" secondItem="jIc-cb-Vc3" secondAttribute="trailing" id="MmG-Jc-2VJ"/>
+                                                <constraint firstItem="jIc-cb-Vc3" firstAttribute="top" secondItem="K1v-HE-JJK" secondAttribute="bottom" id="dSK-W0-IzK"/>
+                                                <constraint firstItem="jIc-cb-Vc3" firstAttribute="leading" secondItem="OXm-ln-aUO" secondAttribute="leading" id="f2R-UF-1ZC"/>
+                                                <constraint firstItem="jIc-cb-Vc3" firstAttribute="top" secondItem="K1v-HE-JJK" secondAttribute="bottom" id="ngL-N7-D0C"/>
+                                                <constraint firstItem="K1v-HE-JJK" firstAttribute="leading" secondItem="OXm-ln-aUO" secondAttribute="leading" id="yNV-3c-Bxy"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="266" height="313"/>
+                                        <connections>
+                                            <outlet property="author" destination="Jl0-Wz-Fj0" id="UeD-av-26O"/>
+                                            <outlet property="rating" destination="KKx-Xt-G0N" id="KX8-Ou-U4Q"/>
+                                            <outlet property="thumnailImage" destination="K1v-HE-JJK" id="IX3-sj-lPw"/>
+                                            <outlet property="title" destination="E7K-Xh-Ljz" id="yme-DG-UUj"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zg9-oQ-RFw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -39,6 +133,7 @@
                     <connections>
                         <outlet property="scrollView" destination="Zmx-gn-SUM" id="aL5-HS-lJr"/>
                         <outlet property="upperView" destination="58M-H5-AM0" id="ffP-Q0-9oR"/>
+                        <outlet property="webtoonColectionView" destination="rH6-9o-P34" id="wjQ-Lt-qyp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aV4-lH-KyB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -47,9 +142,6 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

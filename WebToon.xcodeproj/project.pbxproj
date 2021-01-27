@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		881FF5D925BDA474001702F3 /* WebToonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881FF5D825BDA474001702F3 /* WebToonCollectionViewCell.swift */; };
 		88A56BA625BC36BD009182F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A56BA525BC36BD009182F5 /* AppDelegate.swift */; };
 		88A56BA825BC36BD009182F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A56BA725BC36BD009182F5 /* SceneDelegate.swift */; };
 		88A56BAD25BC36BD009182F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88A56BAB25BC36BD009182F5 /* Main.storyboard */; };
 		88A56BAF25BC36BE009182F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88A56BAE25BC36BE009182F5 /* Assets.xcassets */; };
 		88A56BB225BC36BE009182F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88A56BB025BC36BE009182F5 /* LaunchScreen.storyboard */; };
 		88A56BBE25BC4E12009182F5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A56BBD25BC4E12009182F5 /* MainViewController.swift */; };
+		88CCBBC625BFD617004BA013 /* WebtoonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCBBC525BFD617004BA013 /* WebtoonModel.swift */; };
+		88CCBBC925BFD622004BA013 /* EpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCBBC825BFD622004BA013 /* EpisodeModel.swift */; };
+		88CCBBCF25BFD6F5004BA013 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCBBCE25BFD6F5004BA013 /* Model.swift */; };
+		88CCBBD225BFE875004BA013 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCBBD125BFE875004BA013 /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		881FF5D825BDA474001702F3 /* WebToonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebToonCollectionViewCell.swift; sourceTree = "<group>"; };
 		88A56BA225BC36BD009182F5 /* WebToon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebToon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A56BA525BC36BD009182F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88A56BA725BC36BD009182F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +30,10 @@
 		88A56BB125BC36BE009182F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88A56BB325BC36BE009182F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88A56BBD25BC4E12009182F5 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		88CCBBC525BFD617004BA013 /* WebtoonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebtoonModel.swift; sourceTree = "<group>"; };
+		88CCBBC825BFD622004BA013 /* EpisodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeModel.swift; sourceTree = "<group>"; };
+		88CCBBCE25BFD6F5004BA013 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		88CCBBD125BFE875004BA013 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +66,12 @@
 		88A56BA425BC36BD009182F5 /* WebToon */ = {
 			isa = PBXGroup;
 			children = (
-				88A56BBA25BC36E1009182F5 /* Supporting Files */,
+				881FF5D825BDA474001702F3 /* WebToonCollectionViewCell.swift */,
 				88A56BAB25BC36BD009182F5 /* Main.storyboard */,
 				88A56BB325BC36BE009182F5 /* Info.plist */,
 				88A56BBD25BC4E12009182F5 /* MainViewController.swift */,
+				88CCBBCB25BFD62B004BA013 /* Model */,
+				88A56BBA25BC36E1009182F5 /* Supporting Files */,
 			);
 			path = WebToon;
 			sourceTree = "<group>";
@@ -73,6 +85,17 @@
 				88A56BB025BC36BE009182F5 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88CCBBCB25BFD62B004BA013 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				88CCBBC525BFD617004BA013 /* WebtoonModel.swift */,
+				88CCBBC825BFD622004BA013 /* EpisodeModel.swift */,
+				88CCBBCE25BFD6F5004BA013 /* Model.swift */,
+				88CCBBD125BFE875004BA013 /* Data.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,9 +168,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88CCBBCF25BFD6F5004BA013 /* Model.swift in Sources */,
 				88A56BBE25BC4E12009182F5 /* MainViewController.swift in Sources */,
 				88A56BA625BC36BD009182F5 /* AppDelegate.swift in Sources */,
 				88A56BA825BC36BD009182F5 /* SceneDelegate.swift in Sources */,
+				88CCBBC925BFD622004BA013 /* EpisodeModel.swift in Sources */,
+				88CCBBC625BFD617004BA013 /* WebtoonModel.swift in Sources */,
+				881FF5D925BDA474001702F3 /* WebToonCollectionViewCell.swift in Sources */,
+				88CCBBD225BFE875004BA013 /* Data.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
