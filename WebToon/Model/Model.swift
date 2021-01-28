@@ -8,10 +8,18 @@
 import Foundation
 
 struct Model {
-    var mondayWebtoon : [WebtoonModel] = []
     
+    var webtoon = [[WebtoonModel]]()
+    var mondayWebtoon : [WebtoonModel] = []
+    var tuesdayWebtoon : [WebtoonModel] = []
+    var wendsdayWebtoon : [WebtoonModel] = []
+    var thursdayWebtoon : [WebtoonModel] = []
+    var fridayWebtoon : [WebtoonModel] = []
+    var saturdayWebtoon : [WebtoonModel] = []
+    var sundayWebtoon : [WebtoonModel] = []
     
     init() {
+        // MARK: monday init
         let 참교육 = WebtoonModel(url: 참교육url,title: "참교육" ,episodes: 참교육episodes, rating: "9.75",author: "채용택 / 한가람")
         let 뷰티플군바리 = WebtoonModel(url: 뷰티플군바리url,title: "뷰티플 군바리", episodes: 뷰티플군바리episode, rating: "9.82",author: "설이 / 윤성원")
         let 윈드브레이커 = WebtoonModel(url: 윈드브레이커url,title:"윈드브레이커", episodes: 윈드브레이커episode, rating: "9.87",author: "조용석")
@@ -63,7 +71,58 @@ struct Model {
         mondayWebtoon.append(이탄국의자청비)
         mondayWebtoon.append(평범한8반)
         
+        
+        // MARK: tuesday init
+        
+        let 여신강림 = WebtoonModel(url: 여신강림url, title: "여신강림", episodes: 여신강림episode, rating: "9.62", author: "야옹이")
+        let 관계의종말 = WebtoonModel(url: 관계의종말url, title: "관계의 종말", episodes: 관계의종말episode, rating: "9.76", author: "김용키")
+        let 한림체육관 = WebtoonModel(url: 한림체육관url, title: "한림체육관", episodes: 한림체육관episode, rating: "9.72", author: "혜성 / 이석재")
+        let 바른연애길잡이 = WebtoonModel(url: 바른연애길잡이url, title: "바른연애 길잡이", episodes: 바른연애길잡이episode, rating: "9.97", author: "남수")
+        let 랜덤채팅의그녀 = WebtoonModel(url: 랜던채팅의그녀url, title: "랜덤채팅의 그녀!", episodes: 랜던채팅의그녀episode, rating: "9.68", author: "박은혁")
+        let 하루만네가되고싶어 = WebtoonModel(url: 하루만네가되고싶어url, title: "하루만 네가 되고 싶어", episodes: 하루만네가되고싶어episode, rating: "9.98", author: "삼")
+        let 중증외상센터 = WebtoonModel(url: 중증외상센터골든아워url, title: "중증외상센터 : 골든 아워", episodes: 중증외상센터골든아워episode, rating: "9.97", author: "한산이가 / 홍비치라")
+        let 사신소녀 = WebtoonModel(url: 사신소녀url, title: "사신소년", episodes: 사신소녀episode, rating: "9.92", author: "류")
+//        let 헬58 = WebtoonModel(url: 헬58url, title: "헬58", episodes: 헬58episode, rating: "9.95", author: "장성준")
+        let 신도림 = WebtoonModel(url: 신도림url, title: "신도림", episodes: 신도림episode, rating: "9.95", author: "오세형")
+        
+        
+        tuesdayWebtoon.append(여신강림)
+        tuesdayWebtoon.append(관계의종말)
+        tuesdayWebtoon.append(한림체육관)
+        tuesdayWebtoon.append(바른연애길잡이)
+        tuesdayWebtoon.append(랜덤채팅의그녀)
+        tuesdayWebtoon.append(하루만네가되고싶어)
+        tuesdayWebtoon.append(중증외상센터)
+        tuesdayWebtoon.append(사신소녀)
+//        tuesdayWebtoon.append(헬58)
+        tuesdayWebtoon.append(신도림)
+//
+        webtoon.append(mondayWebtoon)
+        webtoon.append(tuesdayWebtoon)
+        webtoon.append(wendsdayWebtoon)
+        webtoon.append(thursdayWebtoon)
+        webtoon.append(fridayWebtoon)
+        webtoon.append(saturdayWebtoon)
+        webtoon.append(sundayWebtoon)
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

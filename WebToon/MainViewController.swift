@@ -8,7 +8,6 @@
 import UIKit
 
 class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
-    var model = Model()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,11 +21,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @IBOutlet weak var upperView: UIView!
     
-    
+    var labelArray = [UILabel]()
     // MARK: date choosing scroll view part.
     @IBOutlet weak var scrollView: UIScrollView!{
         didSet{
-            var labelArray = [UILabel]()
+            
             scrollView.contentSize = CGSize(width: 475, height: 50)
             for xCoordinate in 0..<7{
                 let selectDate = UITapGestureRecognizer(target: self, action: #selector(selectDayOfWeek))
@@ -61,9 +60,13 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
                 selectedLabel?.backgroundColor = .white
                 selectedLabel = chosenLabel
                 selectedLabel?.backgroundColor = #colorLiteral(red: 0, green: 0.6358990073, blue: 0, alpha: 1)
-                if let choseDate = chosenLabel.text{
-                    print(choseDate)
+//                if let choseDate = chosenLabel.text{
+//                    print(choseDate)
+//                }
+                if let index = labelArray.firstIndex(of: chosenLabel){
+                    chosenDate = index
                 }
+                
             }
         default:
             print("error")
@@ -71,23 +74,33 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     //MARK: collection view part.
+    
+    var model = Model()
+    var chosenDate : Int = 0{
+        didSet{
+            webtoonColectionView.reloadData()
+        }
+    }
+    
     @IBOutlet weak var webtoonColectionView: UICollectionView!
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model.mondayWebtoon.count
+        // collection item 개수
+//        return model.mondayWebtoon.count
+        return model.webtoon[chosenDate].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "webtoon thumnail", for: indexPath) as! WebToonCollectionViewCell
         
         cell.layer.borderColor = UIColor.gray.cgColor
-        cell.layer.borderWidth = 0.4
+        cell.layer.borderWidth = 0.3
         
-        cell.thumnailUrl = model.mondayWebtoon[indexPath.row].webtoonThumNailUrl
-        cell.title.text = model.mondayWebtoon[indexPath.row].webtoonTitle
-        cell.author.text = model.mondayWebtoon[indexPath.row].webtoonAuthor
-        cell.rating.text = "⭐︎" + model.mondayWebtoon[indexPath.row].webtoonRating
+        // cell configure 하는 부분.
+        cell.thumnailUrl = model.webtoon[chosenDate][indexPath.row].webtoonThumNailUrl
+        cell.title.text = model.webtoon[chosenDate][indexPath.row].webtoonTitle
+        cell.author.text = model.webtoon[chosenDate][indexPath.row].webtoonAuthor
+        cell.rating.text = "⭐︎" + model.webtoon[chosenDate][indexPath.row].webtoonRating
         cell.rating.textColor = .red
         return cell
     }
@@ -96,8 +109,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         print(indexPath.item)
     }
     
-    
-    // 200 => 14 6   ->  7 : 3 비율
     
     private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3),
