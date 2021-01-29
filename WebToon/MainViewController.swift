@@ -11,7 +11,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        upperCollectionView.dataSource = self
+        upperCollectionView.delegate = self
+//        upperCollectionView.collectionViewLayout = layoutForUpperView()
         webtoonColectionView.dataSource = self
         webtoonColectionView.delegate = self
         webtoonColectionView.collectionViewLayout = createLayout()
@@ -82,27 +84,42 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
+    let upperImage = [UIImage(named: "image1"),UIImage(named: "image2"),UIImage(named: "image3"),UIImage(named: "image4"), UIImage(named: "image5")]
+    
+    
     @IBOutlet weak var webtoonColectionView: UICollectionView!
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // collection item 개수
-//        return model.mondayWebtoon.count
-        return model.webtoon[chosenDate].count
+        if collectionView == webtoonColectionView{
+            return model.webtoon[chosenDate].count
+        }else{
+            return upperImage.count
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "webtoon thumnail", for: indexPath) as! WebToonCollectionViewCell
+        if collectionView == webtoonColectionView{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "webtoon thumnail", for: indexPath) as! WebToonCollectionViewCell
+            
+            cell.layer.borderColor = UIColor.gray.cgColor
+            cell.layer.borderWidth = 0.3
+            
+            // cell configure 하는 부분.
+            cell.thumnailUrl = model.webtoon[chosenDate][indexPath.row].webtoonThumNailUrl
+            cell.title.text = model.webtoon[chosenDate][indexPath.row].webtoonTitle
+            cell.author.text = model.webtoon[chosenDate][indexPath.row].webtoonAuthor
+            cell.rating.text = "⭐︎" + model.webtoon[chosenDate][indexPath.row].webtoonRating
+            cell.rating.textColor = .red
+            return cell
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upper view cell", for: indexPath) as! UpperCollectionViewCell
+            cell.imageView.image = upperImage[indexPath.row]
+            cell.imageView.sizeToFit()
+            
+            return cell
+        }
         
-        cell.layer.borderColor = UIColor.gray.cgColor
-        cell.layer.borderWidth = 0.3
-        
-        // cell configure 하는 부분.
-        cell.thumnailUrl = model.webtoon[chosenDate][indexPath.row].webtoonThumNailUrl
-        cell.title.text = model.webtoon[chosenDate][indexPath.row].webtoonTitle
-        cell.author.text = model.webtoon[chosenDate][indexPath.row].webtoonAuthor
-        cell.rating.text = "⭐︎" + model.webtoon[chosenDate][indexPath.row].webtoonRating
-        cell.rating.textColor = .red
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -127,5 +144,50 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
-    }}
+    }
+    
+    @IBOutlet weak var upperCollectionView: UICollectionView!
+    
+    private func layoutForUpperView() -> UICollectionViewLayout{
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                             heightDimension: .fractionalHeight(1.0))
+
+
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .fractionalHeight(1.0))
+
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                         subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        layout.configuration.scrollDirection = .vertical
+
+        return layout
+    }
+    
+}
+
+extension MainViewController : UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let size = upperCollectionView.frame.size
+        return CGSize(width: size.width, height: size.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+}
 
