@@ -13,18 +13,40 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewDidLoad()
         upperCollectionView.dataSource = self
         upperCollectionView.delegate = self
-//        upperCollectionView.collectionViewLayout = layoutForUpperView()
         webtoonColectionView.dataSource = self
         webtoonColectionView.delegate = self
         webtoonColectionView.collectionViewLayout = createLayout()
         webtoonColectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webtoonColectionView?.backgroundColor = .white
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+        }
     }
     
+    // MARK: Upper Collection View.
+    
     @IBOutlet weak var upperView: UIView!
+    @IBOutlet weak var upperCollectionView: UICollectionView!
+    let upperImage = [UIImage(named: "image1"),UIImage(named: "image2"),UIImage(named: "image3"),UIImage(named: "image4"), UIImage(named: "image5")]
+    var timer = Timer()
+    var counter = 0
+    
+    @objc func changeImage(){
+        if counter < upperImage.count{
+            let index = IndexPath(item: counter, section: 0)
+            upperCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
+            counter += 1
+        }else{
+            counter = 0
+            let index = IndexPath(item: counter, section: 0)
+            upperCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
+            
+        }
+    }
+    
+    // MARK: date choosing scroll view part.
     
     var labelArray = [UILabel]()
-    // MARK: date choosing scroll view part.
     @IBOutlet weak var scrollView: UIScrollView!{
         didSet{
             
@@ -62,13 +84,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
                 selectedLabel?.backgroundColor = .white
                 selectedLabel = chosenLabel
                 selectedLabel?.backgroundColor = #colorLiteral(red: 0, green: 0.6358990073, blue: 0, alpha: 1)
-//                if let choseDate = chosenLabel.text{
-//                    print(choseDate)
-//                }
                 if let index = labelArray.firstIndex(of: chosenLabel){
                     chosenDate = index
                 }
-                
             }
         default:
             print("error")
@@ -83,10 +101,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             webtoonColectionView.reloadData()
         }
     }
-    
-    let upperImage = [UIImage(named: "image1"),UIImage(named: "image2"),UIImage(named: "image3"),UIImage(named: "image4"), UIImage(named: "image5")]
-    
-    
     @IBOutlet weak var webtoonColectionView: UICollectionView!
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -95,7 +109,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }else{
             return upperImage.count
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -104,8 +117,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             cell.layer.borderColor = UIColor.gray.cgColor
             cell.layer.borderWidth = 0.3
-            
-            // cell configure 하는 부분.
+
             cell.thumnailUrl = model.webtoon[chosenDate][indexPath.row].webtoonThumNailUrl
             cell.title.text = model.webtoon[chosenDate][indexPath.row].webtoonTitle
             cell.author.text = model.webtoon[chosenDate][indexPath.row].webtoonAuthor
@@ -113,19 +125,25 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             cell.rating.textColor = .red
             return cell
         }else{
+            let itemToShow = upperImage[indexPath.row % upperImage.count]
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upper view cell", for: indexPath) as! UpperCollectionViewCell
-            cell.imageView.image = upperImage[indexPath.row]
+
+            cell.imageView.image = itemToShow
             cell.imageView.sizeToFit()
             
             return cell
         }
-        
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let index = Int(upperCollectionView.contentOffset.x / upperCollectionView.frame.size.width)
+        counter = index
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
     }
-    
     
     private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3),
@@ -145,30 +163,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
-    
-    @IBOutlet weak var upperCollectionView: UICollectionView!
-    
-    private func layoutForUpperView() -> UICollectionViewLayout{
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                             heightDimension: .fractionalHeight(1.0))
-
-
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .fractionalHeight(1.0))
-
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                         subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        layout.configuration.scrollDirection = .vertical
-
-        return layout
-    }
-    
 }
 
 extension MainViewController : UICollectionViewDelegateFlowLayout{
