@@ -49,8 +49,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     var labelArray = [UILabel]()
     @IBOutlet weak var scrollView: UIScrollView!{
         didSet{
-            
-            scrollView.contentSize = CGSize(width: 475, height: 50)
+            scrollView.contentSize = CGSize(width: 525, height: 40)
             for xCoordinate in 0..<7{
                 let selectDate = UITapGestureRecognizer(target: self, action: #selector(selectDayOfWeek))
                 let label = UILabel(frame: CGRect(x: xCoordinate * 75, y: 0, width: 75, height: 50))
