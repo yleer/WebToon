@@ -139,9 +139,16 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let index = Int(upperCollectionView.contentOffset.x / upperCollectionView.frame.size.width)
         counter = index
     }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
+        if collectionView == webtoonColectionView{
+            performSegue(withIdentifier: "webtoon list", sender: self)
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! EpisodeTableViewController
+        if let index = webtoonColectionView.indexPathsForSelectedItems?.first?.item{
+            destinationVC.webtoon = model.webtoon[chosenDate][index]
+        }
     }
     
     private func createLayout() -> UICollectionViewLayout {
