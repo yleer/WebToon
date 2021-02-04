@@ -110,11 +110,11 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jIc-cb-Vc3">
                                                                     <rect key="frame" x="0.0" y="215" width="266" height="98"/>
                                                                     <subviews>
-                                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="bbZ-Hc-rFI">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="266" height="98"/>
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="bbZ-Hc-rFI">
+                                                                            <rect key="frame" x="4" y="8" width="262" height="82"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7K-Xh-Ljz">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="266" height="34"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="262" height="27.5"/>
                                                                                     <attributedString key="attributedText">
                                                                                         <fragment content="Label">
                                                                                             <attributes>
@@ -126,7 +126,7 @@
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKx-Xt-G0N">
-                                                                                    <rect key="frame" x="0.0" y="35" width="266" height="29"/>
+                                                                                    <rect key="frame" x="0.0" y="30.5" width="262" height="23"/>
                                                                                     <attributedString key="attributedText">
                                                                                         <fragment content="Label">
                                                                                             <attributes>
@@ -139,11 +139,11 @@
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jl0-Wz-Fj0">
-                                                                                    <rect key="frame" x="0.0" y="65" width="266" height="33"/>
+                                                                                    <rect key="frame" x="0.0" y="56.5" width="262" height="25.5"/>
                                                                                     <attributedString key="attributedText">
                                                                                         <fragment content="Label">
                                                                                             <attributes>
-                                                                                                <font key="NSFont" metaFont="cellTitle"/>
+                                                                                                <font key="NSFont" metaFont="system" size="11"/>
                                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="5" tighteningFactorForTruncation="0.0"/>
                                                                                             </attributes>
                                                                                         </fragment>
@@ -156,9 +156,9 @@
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="trailing" secondItem="bbZ-Hc-rFI" secondAttribute="trailing" id="8fR-F5-Smb"/>
-                                                                        <constraint firstItem="bbZ-Hc-rFI" firstAttribute="top" secondItem="jIc-cb-Vc3" secondAttribute="top" id="B2I-Ut-Nlh"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="bbZ-Hc-rFI" secondAttribute="bottom" id="HsL-fW-bs7"/>
-                                                                        <constraint firstItem="bbZ-Hc-rFI" firstAttribute="leading" secondItem="jIc-cb-Vc3" secondAttribute="leading" id="d6p-pL-bAP"/>
+                                                                        <constraint firstItem="bbZ-Hc-rFI" firstAttribute="top" secondItem="jIc-cb-Vc3" secondAttribute="top" constant="8" id="B2I-Ut-Nlh"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="bbZ-Hc-rFI" secondAttribute="bottom" constant="8" id="HsL-fW-bs7"/>
+                                                                        <constraint firstItem="bbZ-Hc-rFI" firstAttribute="leading" secondItem="jIc-cb-Vc3" secondAttribute="leading" constant="4" id="d6p-pL-bAP"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>

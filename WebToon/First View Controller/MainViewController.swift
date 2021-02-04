@@ -122,6 +122,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             cell.author.text = model.webtoon[chosenDate][indexPath.row].webtoonAuthor
             cell.rating.text = "★" + model.webtoon[chosenDate][indexPath.row].webtoonRating
             cell.rating.textColor = .red
+            cell.author.textColor = .gray
             return cell
         }else{
             let itemToShow = upperImage[indexPath.row % upperImage.count]

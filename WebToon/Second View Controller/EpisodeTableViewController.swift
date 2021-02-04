@@ -36,6 +36,7 @@ class EpisodeTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.tableHeaderView = headerView()
         tableView.tableFooterView = footerView()
+        
     }
     
     // MARK: - Table view data source
