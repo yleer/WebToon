@@ -11,6 +11,7 @@
 		882A70F825C41B5100302549 /* UpperCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A70F725C41B5100302549 /* UpperCollectionViewCell.swift */; };
 		884F2B9925C918FE00E0F22A /* EpisodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884F2B9825C918FE00E0F22A /* EpisodeTableViewController.swift */; };
 		884F2B9C25C9196100E0F22A /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884F2B9B25C9196100E0F22A /* EpisodeTableViewCell.swift */; };
+		88969AB425CA47D00055D8D2 /* EpisodeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88969AB325CA47D00055D8D2 /* EpisodeHeader.swift */; };
 		88A56BA625BC36BD009182F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A56BA525BC36BD009182F5 /* AppDelegate.swift */; };
 		88A56BA825BC36BD009182F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A56BA725BC36BD009182F5 /* SceneDelegate.swift */; };
 		88A56BAD25BC36BD009182F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88A56BAB25BC36BD009182F5 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 		882A70F725C41B5100302549 /* UpperCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpperCollectionViewCell.swift; sourceTree = "<group>"; };
 		884F2B9825C918FE00E0F22A /* EpisodeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewController.swift; sourceTree = "<group>"; };
 		884F2B9B25C9196100E0F22A /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
+		88969AB325CA47D00055D8D2 /* EpisodeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeader.swift; sourceTree = "<group>"; };
 		88A56BA225BC36BD009182F5 /* WebToon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebToon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A56BA525BC36BD009182F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88A56BA725BC36BD009182F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +55,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		884F2B9E25C9305300E0F22A /* First View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				881FF5D825BDA474001702F3 /* WebToonCollectionViewCell.swift */,
+				88A56BBD25BC4E12009182F5 /* MainViewController.swift */,
+				882A70F725C41B5100302549 /* UpperCollectionViewCell.swift */,
+			);
+			path = "First View Controller";
+			sourceTree = "<group>";
+		};
+		88969AB125CA43430055D8D2 /* Second View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				884F2B9825C918FE00E0F22A /* EpisodeTableViewController.swift */,
+				884F2B9B25C9196100E0F22A /* EpisodeTableViewCell.swift */,
+				88969AB325CA47D00055D8D2 /* EpisodeHeader.swift */,
+			);
+			path = "Second View Controller";
+			sourceTree = "<group>";
+		};
 		88A56B9925BC36BC009182F5 = {
 			isa = PBXGroup;
 			children = (
@@ -72,13 +94,10 @@
 		88A56BA425BC36BD009182F5 /* WebToon */ = {
 			isa = PBXGroup;
 			children = (
-				881FF5D825BDA474001702F3 /* WebToonCollectionViewCell.swift */,
-				88A56BAB25BC36BD009182F5 /* Main.storyboard */,
 				88A56BB325BC36BE009182F5 /* Info.plist */,
-				88A56BBD25BC4E12009182F5 /* MainViewController.swift */,
-				884F2B9825C918FE00E0F22A /* EpisodeTableViewController.swift */,
-				884F2B9B25C9196100E0F22A /* EpisodeTableViewCell.swift */,
-				882A70F725C41B5100302549 /* UpperCollectionViewCell.swift */,
+				884F2B9E25C9305300E0F22A /* First View Controller */,
+				88A56BAB25BC36BD009182F5 /* Main.storyboard */,
+				88969AB125CA43430055D8D2 /* Second View Controller */,
 				88CCBBCB25BFD62B004BA013 /* Model */,
 				88A56BBA25BC36E1009182F5 /* Supporting Files */,
 			);
@@ -181,6 +200,7 @@
 				88CCBBCF25BFD6F5004BA013 /* Model.swift in Sources */,
 				88A56BBE25BC4E12009182F5 /* MainViewController.swift in Sources */,
 				88A56BA625BC36BD009182F5 /* AppDelegate.swift in Sources */,
+				88969AB425CA47D00055D8D2 /* EpisodeHeader.swift in Sources */,
 				88A56BA825BC36BD009182F5 /* SceneDelegate.swift in Sources */,
 				88CCBBC925BFD622004BA013 /* EpisodeModel.swift in Sources */,
 				884F2B9C25C9196100E0F22A /* EpisodeTableViewCell.swift in Sources */,
