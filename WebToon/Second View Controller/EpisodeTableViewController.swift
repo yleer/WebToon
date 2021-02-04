@@ -48,6 +48,8 @@ class EpisodeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "episodeCell", for: indexPath) as! EpisodeTableViewCell
         
+        cell.episodeImage.layer.cornerRadius = 5
+        
         cell.episodeTitle.font = UIFont.systemFont(ofSize: 15)
         cell.episodeRating.font = UIFont.systemFont(ofSize: 13)
         cell.episodeRating.textColor = .gray
