@@ -120,7 +120,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             cell.thumnailUrl = model.webtoon[chosenDate][indexPath.row].webtoonThumNailUrl
             cell.title.text = model.webtoon[chosenDate][indexPath.row].webtoonTitle
             cell.author.text = model.webtoon[chosenDate][indexPath.row].webtoonAuthor
-            cell.rating.text = "⭐︎" + model.webtoon[chosenDate][indexPath.row].webtoonRating
+            cell.rating.text = "★" + model.webtoon[chosenDate][indexPath.row].webtoonRating
             cell.rating.textColor = .red
             return cell
         }else{
@@ -148,6 +148,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let destinationVC = segue.destination as! EpisodeTableViewController
         if let index = webtoonColectionView.indexPathsForSelectedItems?.first?.item{
             destinationVC.webtoon = model.webtoon[chosenDate][index]
+            destinationVC.date = chosenDate
         }
     }
     

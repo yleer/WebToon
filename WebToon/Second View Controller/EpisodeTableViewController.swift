@@ -10,6 +10,27 @@ import UIKit
 class EpisodeTableViewController: UITableViewController {
     
     var webtoon : WebtoonModel?
+    var date : Int?{
+        didSet{
+            if date == 0{
+                stringDate = "월요웹툰"
+            }else if date == 1{
+                stringDate = "화요웹툰"
+            }else if date == 2{
+                stringDate = "수요웹툰"
+            }else if date == 3{
+                stringDate = "목요웹툰"
+            }else if date == 4{
+                stringDate = "금요웹툰"
+            }else if date == 5{
+                stringDate = "토요웹툰"
+            }else if date == 6{
+                stringDate = "일요웹툰"
+            }
+        }
+    }
+    
+    var stringDate : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +48,19 @@ class EpisodeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "episodeCell", for: indexPath) as! EpisodeTableViewCell
         
+        cell.episodeTitle.font = UIFont.systemFont(ofSize: 15)
+        cell.episodeRating.font = UIFont.systemFont(ofSize: 13)
+        cell.episodeRating.textColor = .gray
+        cell.episodeDate.font = UIFont.systemFont(ofSize: 13)
+        cell.episodeDate.textColor = .gray
+        
         cell.thumnailUrl = webtoon?.episodeArray[indexPath.row].episodeThumnailImageUrl
         cell.episodeDate.text = webtoon?.episodeArray[indexPath.row].episodeDate
         cell.episodeTitle.text = webtoon?.episodeArray[indexPath.row].episodeTitle
-        cell.episodeRating.text = webtoon?.episodeArray[indexPath.row].episodeRaiting
+        if let rating = webtoon?.episodeArray[indexPath.row].episodeRaiting{
+            cell.episodeRating.text = "★" + rating
+        }
+        
         
         return cell
     }
@@ -52,6 +82,13 @@ class EpisodeTableViewController: UITableViewController {
         author.translatesAutoresizingMaskIntoConstraints = false
         date.translatesAutoresizingMaskIntoConstraints = false
         description.translatesAutoresizingMaskIntoConstraints = false
+        
+        title.font = UIFont.boldSystemFont(ofSize: 20)
+        author.font = UIFont.systemFont(ofSize: 15)
+        date.font = UIFont.systemFont(ofSize: 15)
+        date.textColor = .gray
+        description.font = UIFont.systemFont(ofSize: 15)
+        description.textColor = .gray
         
         header.addSubview(imageView)
         header.addSubview(title)
@@ -98,7 +135,8 @@ class EpisodeTableViewController: UITableViewController {
         imageView.image = UIImage(named: "image3")
         title.text = webtoon?.webtoonTitle
         author.text = webtoon?.webtoonAuthor
-        date.text = "화요일"
+        date.text = stringDate
+        
         if let dis = webtoon?.webtoonDiscription{
             description.text = dis
         }
