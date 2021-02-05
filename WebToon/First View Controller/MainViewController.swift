@@ -18,9 +18,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         webtoonColectionView.collectionViewLayout = createLayout()
         webtoonColectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webtoonColectionView?.backgroundColor = .white
+        webtoonColectionView.bounces = false
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
+        
+        navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: Upper Collection View.
@@ -49,10 +52,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     var labelArray = [UILabel]()
     @IBOutlet weak var scrollView: UIScrollView!{
         didSet{
-            scrollView.contentSize = CGSize(width: 525, height: 40)
-            for xCoordinate in 0..<7{
+            scrollView.contentSize = CGSize(width: 480, height: 40)
+            for xCoordinate in 0..<8{
                 let selectDate = UITapGestureRecognizer(target: self, action: #selector(selectDayOfWeek))
-                let label = UILabel(frame: CGRect(x: xCoordinate * 75, y: 0, width: 75, height: 50))
+                let label = UILabel(frame: CGRect(x: xCoordinate * 60, y: 0, width: 60, height: 50))
                 label.isUserInteractionEnabled = true
                 label.addGestureRecognizer(selectDate)
                 labelArray.append(label)
@@ -65,6 +68,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             labelArray[4].text = "금" ; labelArray[4].textAlignment = .center
             labelArray[5].text = "토" ; labelArray[5].textAlignment = .center
             labelArray[6].text = "일" ; labelArray[6].textAlignment = .center
+            labelArray[7].text = "완결" ; labelArray[7].textAlignment = .center
             
             for label in labelArray{
                 scrollView.addSubview(label)
