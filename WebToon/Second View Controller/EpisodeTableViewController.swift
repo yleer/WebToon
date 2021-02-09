@@ -35,64 +35,88 @@ class EpisodeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isHidden = false
-        
-        let interestButton = UIButton(type: .system)
-        interestButton.setImage(UIImage(named: "interestButton"), for: .normal)
-        interestButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        
-        
-        configureTopInset()
+        configureTopAndBottom()
     }
     
-    private func configureTopInset(){
-        tableView.contentInset.top = tableView.safeAreaInsets.top
-        navBarItems()
+    private func configureTopAndBottom(){
+        navigtionbarSetup()
+        navigationController?.navigationBar.barTintColor = .brown
+//        tableView.addSubview(additionalSpace())
         tableView.tableHeaderView = headerView()
         tableView.tableFooterView = footerView()
         
     }
     
     // MARK: Configuring navigation tab bar.
-    
-    private func navBarItems(){
+    private func navigtionbarSetup(){
+//        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.topItem?.backButtonTitle = " "
         
-        // need to change the button's shape.
+        navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: moreButtonSetUp()), UIBarButtonItem(customView: interestButtonSetUp())]
+    }
+    
+    private func interestButtonSetUp() -> UIButton{
         let interestButton = UIButton(type: .system)
         interestButton.setTitle("⊕ 관심", for: .normal)
-        
-        
-        let a = interestButton.titleLabel
-        print(a?.text)
-        interestButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        
+        interestButton.titleLabel?.font = .systemFont(ofSize: 20)
+        interestButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        return interestButton
+    }
+    
+    private func moreButtonSetUp() -> UIButton{
         let moreButton = UIButton(type: .system)
-        moreButton.setImage(UIImage(named: "moreButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        moreButton.setTitle("⋮", for: .normal)
+        moreButton.titleLabel?.font = .systemFont(ofSize: 30)
+        moreButton.contentHorizontalAlignment = .right
         moreButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        
-        navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: moreButton), UIBarButtonItem(customView: interestButton)]
+        return moreButton
     }
 
     
+    // MARK: Change navigation bar according to its location.
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let a = tableView.tableHeaderView?.subviews[1]
-        
+    
         let  heightCheck = tableView.bounds.origin.y + a!.frame.height + navigationController!.navigationBar.frame.height
         if heightCheck > a!.frame.origin.y{
             navigationController?.navigationBar.backItem?.backButtonTitle = webtoon!.webtoonTitle
-            
         }else{
             navigationController?.navigationBar.backItem?.backButtonTitle = ""
         }
 
+//        let viewToAdd = additionalSpace()
+        
         if scrollView.contentOffset.y == -(tableView.safeAreaInsets.top){
             navigationController?.navigationBar.barTintColor = .brown
+//            tableView.addSubview(viewToAdd)
+            navigationController?.navigationBar.tintColor = .white
         }
         else{
-            navigationController?.navigationBar.barTintColor = .none
+//            for view in tableView.subviews{
+//                if view.frame.height == 75{
+//                    view.removeFromSuperview()
+//                }
+//            }
+            navigationController?.navigationBar.barTintColor = .white
+            navigationController?.navigationBar.tintColor = .black
         }
+    }
+    
+//    private func additionalSpace() -> UIView{
+//        // get bar location
+//        let endOfNavigationBar = CGFloat(0)
+//
+//        let view = UIView(frame: CGRect(x: 0, y: endOfNavigationBar, width: tableView.frame.width, height: 75))
+//        view.backgroundColor = .brown
+//
+//        return view
+//    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(tableView.subviews)
     }
 
     
@@ -229,3 +253,5 @@ class EpisodeTableViewController: UITableViewController {
         return footer
     }
 }
+
+

@@ -220,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aV4-lH-KyB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1028.985507246377" y="142.63392857142856"/>
+            <point key="canvasLocation" x="832" y="143"/>
         </scene>
         <!--Episode Table View Controller-->
         <scene sceneID="W5D-cf-A8x">
@@ -230,6 +230,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <inset key="separatorInset" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="episodeCell" rowHeight="104" id="3KU-lZ-GMR" customClass="EpisodeTableViewCell" customModule="WebToon" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="104"/>
@@ -292,13 +293,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="4qi-kX-h7W"/>
-                    <connections>
-                        <segue destination="RJk-dm-TrR" kind="show" id="ZDT-DY-zL4"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQ8-Qo-8Is" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1895.6521739130437" y="142.63392857142856"/>
+            <point key="canvasLocation" x="1543" y="143"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="igB-xO-3uQ">
@@ -317,7 +315,9 @@
                         <viewLayoutGuide key="safeArea" id="MB0-eV-OgQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="9ff-DO-WYE"/>
+                    <navigationItem key="navigationItem" id="9ff-DO-WYE">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="moreButton" id="caL-Mf-cSF"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I34-dl-qPX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -331,8 +331,12 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qtY-9w-7B8">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" systemColor="systemBlueColor"/>
+                        <color key="tintColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                            <color key="textShadowColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -345,6 +349,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="moreButton" width="42" height="50"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -353,6 +364,9 @@
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
