@@ -147,6 +147,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == webtoonColectionView{
             performSegue(withIdentifier: "webtoon list", sender: self)
+//            navigationController?.pushAnimation(controller: self)
         }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

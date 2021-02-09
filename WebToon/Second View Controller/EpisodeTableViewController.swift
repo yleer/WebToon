@@ -35,7 +35,7 @@ class EpisodeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isHidden = false
         configureTopAndBottom()
     }
@@ -43,15 +43,17 @@ class EpisodeTableViewController: UITableViewController {
     private func configureTopAndBottom(){
         navigtionbarSetup()
         navigationController?.navigationBar.barTintColor = .brown
-//        tableView.addSubview(additionalSpace())
+        tableView.addSubview(additionalSpace())
         tableView.tableHeaderView = headerView()
         tableView.tableFooterView = footerView()
-        
+        tableView.bringSubviewToFront(tableView.tableHeaderView!)
     }
+    
+    
     
     // MARK: Configuring navigation tab bar.
     private func navigtionbarSetup(){
-//        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.topItem?.backButtonTitle = " "
         
         navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: moreButtonSetUp()), UIBarButtonItem(customView: interestButtonSetUp())]
@@ -78,42 +80,45 @@ class EpisodeTableViewController: UITableViewController {
     // MARK: Change navigation bar according to its location.
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        
+        
         let a = tableView.tableHeaderView?.subviews[1]
     
-        let  heightCheck = tableView.bounds.origin.y + a!.frame.height + navigationController!.navigationBar.frame.height
-        if heightCheck > a!.frame.origin.y{
+        
+        if tableView.contentOffset.y  > a!.frame.origin.y + a!.frame.height{
             navigationController?.navigationBar.backItem?.backButtonTitle = webtoon!.webtoonTitle
         }else{
             navigationController?.navigationBar.backItem?.backButtonTitle = ""
         }
-
-//        let viewToAdd = additionalSpace()
+        let viewToAdd = additionalSpace()
         
-        if scrollView.contentOffset.y == -(tableView.safeAreaInsets.top){
+        if scrollView.contentOffset.y == 0{
             navigationController?.navigationBar.barTintColor = .brown
-//            tableView.addSubview(viewToAdd)
+            tableView.addSubview(viewToAdd)
             navigationController?.navigationBar.tintColor = .white
         }
         else{
-//            for view in tableView.subviews{
-//                if view.frame.height == 75{
-//                    view.removeFromSuperview()
-//                }
-//            }
+            for view in tableView.subviews{
+                if view.frame.height == 75{
+                    view.removeFromSuperview()
+                }
+            }
             navigationController?.navigationBar.barTintColor = .white
             navigationController?.navigationBar.tintColor = .black
         }
+        
+        tableView.bringSubviewToFront(tableView.tableHeaderView!)
     }
     
-//    private func additionalSpace() -> UIView{
-//        // get bar location
-//        let endOfNavigationBar = CGFloat(0)
-//
-//        let view = UIView(frame: CGRect(x: 0, y: endOfNavigationBar, width: tableView.frame.width, height: 75))
-//        view.backgroundColor = .brown
-//
-//        return view
-//    }
+    private func additionalSpace() -> UIView{
+        let endOfNavigationBar = CGFloat(0)
+
+        let view = UIView(frame: CGRect(x: 0, y: endOfNavigationBar, width: tableView.frame.width, height: 75))
+        view.backgroundColor = .brown
+
+        return view
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(tableView.subviews)
@@ -144,7 +149,6 @@ class EpisodeTableViewController: UITableViewController {
         if let rating = webtoon?.episodeArray[indexPath.row].episodeRaiting{
             cell.episodeRating.text = "★" + rating
         }
-        print(cell.bounds)
         return cell
     }
     
@@ -255,3 +259,16 @@ class EpisodeTableViewController: UITableViewController {
 }
 
 
+
+// 되긴 하는데 에러 나네.
+extension UINavigationController{
+    func pushAnimation(controller : UIViewController){
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        pushViewController(controller, animated: false)
+    }
+}
