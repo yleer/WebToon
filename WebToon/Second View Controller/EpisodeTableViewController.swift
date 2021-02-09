@@ -34,10 +34,67 @@ class EpisodeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        navigationController?.navigationBar.isHidden = false
+        
+        let interestButton = UIButton(type: .system)
+        interestButton.setImage(UIImage(named: "interestButton"), for: .normal)
+        interestButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        
+        
+        configureTopInset()
+    }
+    
+    private func configureTopInset(){
+        tableView.contentInset.top = tableView.safeAreaInsets.top
+        navBarItems()
         tableView.tableHeaderView = headerView()
         tableView.tableFooterView = footerView()
         
     }
+    
+    // MARK: Configuring navigation tab bar.
+    
+    private func navBarItems(){
+        navigationController?.navigationBar.topItem?.backButtonTitle = " "
+        
+        // need to change the button's shape.
+        let interestButton = UIButton(type: .system)
+        interestButton.setTitle("⊕ 관심", for: .normal)
+        
+        
+        let a = interestButton.titleLabel
+        print(a?.text)
+        interestButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        
+        let moreButton = UIButton(type: .system)
+        moreButton.setImage(UIImage(named: "moreButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        moreButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        
+        navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: moreButton), UIBarButtonItem(customView: interestButton)]
+    }
+
+    
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let a = tableView.tableHeaderView?.subviews[1]
+        
+        let  heightCheck = tableView.bounds.origin.y + a!.frame.height + navigationController!.navigationBar.frame.height
+        if heightCheck > a!.frame.origin.y{
+            navigationController?.navigationBar.backItem?.backButtonTitle = webtoon!.webtoonTitle
+            
+        }else{
+            navigationController?.navigationBar.backItem?.backButtonTitle = ""
+        }
+
+        if scrollView.contentOffset.y == -(tableView.safeAreaInsets.top){
+            navigationController?.navigationBar.barTintColor = .brown
+        }
+        else{
+            navigationController?.navigationBar.barTintColor = .none
+        }
+    }
+
     
     // MARK: - Table view data source
     
@@ -63,10 +120,11 @@ class EpisodeTableViewController: UITableViewController {
         if let rating = webtoon?.episodeArray[indexPath.row].episodeRaiting{
             cell.episodeRating.text = "★" + rating
         }
-        
-        
+        print(cell.bounds)
         return cell
     }
+    
+    
     
     // MARK: configuring table view header.
     
@@ -86,6 +144,7 @@ class EpisodeTableViewController: UITableViewController {
         date.translatesAutoresizingMaskIntoConstraints = false
         description.translatesAutoresizingMaskIntoConstraints = false
         
+        
         title.font = UIFont.boldSystemFont(ofSize: 20)
         author.font = UIFont.systemFont(ofSize: 15)
         date.font = UIFont.systemFont(ofSize: 15)
@@ -104,7 +163,7 @@ class EpisodeTableViewController: UITableViewController {
             imageView.topAnchor.constraint(equalTo: header.layoutMarginsGuide.topAnchor, constant: 0),
             imageView.leadingAnchor.constraint(equalTo: header.layoutMarginsGuide.leadingAnchor, constant: 20),
             imageView.trailingAnchor.constraint(equalTo: header.layoutMarginsGuide.trailingAnchor, constant: -20),
-            imageView.heightAnchor.constraint(equalToConstant: 200),
+            imageView.heightAnchor.constraint(equalToConstant: header.frame.height * (3/5)),
             
             // title constraints.
             title.topAnchor.constraint(equalTo: imageView.layoutMarginsGuide.bottomAnchor, constant: 20),
@@ -135,7 +194,9 @@ class EpisodeTableViewController: UITableViewController {
         author.setContentHuggingPriority(.defaultHigh + 1 , for: .horizontal)
         date.setContentHuggingPriority(.defaultHigh - 1, for: .horizontal)
         
-        imageView.image = UIImage(named: "image3")
+        imageView.image = UIImage(named: "yori")
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 3
         title.text = webtoon?.webtoonTitle
         author.text = webtoon?.webtoonAuthor
         date.text = stringDate
@@ -143,6 +204,7 @@ class EpisodeTableViewController: UITableViewController {
         if let dis = webtoon?.webtoonDiscription{
             description.text = dis
         }
+        
         return header
     }
     
