@@ -85,7 +85,7 @@
                                             <constraint firstAttribute="trailing" secondItem="Zmx-gn-SUM" secondAttribute="trailing" id="xXk-do-vJ2"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51d-wT-Obh">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51d-wT-Obh" userLabel="Bottom Collection View">
                                         <rect key="frame" x="0.0" y="260" width="414" height="636"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rH6-9o-P34">

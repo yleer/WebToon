@@ -43,12 +43,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             counter = 0
             let index = IndexPath(item: counter, section: 0)
             upperCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
-            
         }
     }
     
     // MARK: date choosing scroll view part.
-    
     var labelArray = [UILabel]()
     @IBOutlet weak var scrollView: UIScrollView!{
         didSet{
