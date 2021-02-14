@@ -11,14 +11,12 @@ class EpisodeTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.isStatusBarHidden = false
+        navigationController?.navigationBar.isTranslucent = false
+        
+        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.isStatusBarHidden = true
-    }
-    
+
     var webtoon : WebtoonModel?
     var date : Int?{
         didSet{
@@ -41,6 +39,8 @@ class EpisodeTableViewController: UITableViewController {
     }
     
     var stringDate : String?
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +64,8 @@ class EpisodeTableViewController: UITableViewController {
     // MARK: Configuring navigation tab bar.
     private func navigtionbarSetup(){
         // MARK: need to fix isTranslucent part.
-//        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isTranslucent = false
+        
         
         
         navigationController?.navigationBar.topItem?.backButtonTitle = " "

@@ -17,8 +17,11 @@ class LastViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var webView: WKWebView!
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = .gray
         if let url = episode?.episodeUrl{
             let myRequest = URLRequest(url: url)
             webView.load(myRequest)
