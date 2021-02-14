@@ -9,6 +9,16 @@ import UIKit
 
 class EpisodeTableViewController: UITableViewController {
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.isStatusBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.isStatusBarHidden = true
+    }
+    
     var webtoon : WebtoonModel?
     var date : Int?{
         didSet{
@@ -35,7 +45,7 @@ class EpisodeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isHidden = false
         configureTopAndBottom()
     }
@@ -53,9 +63,11 @@ class EpisodeTableViewController: UITableViewController {
     
     // MARK: Configuring navigation tab bar.
     private func navigtionbarSetup(){
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.topItem?.backButtonTitle = " "
+        // MARK: need to fix isTranslucent part.
+//        navigationController?.navigationBar.isTranslucent = false
         
+        
+        navigationController?.navigationBar.topItem?.backButtonTitle = " "
         navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: moreButtonSetUp()), UIBarButtonItem(customView: interestButtonSetUp())]
     }
     
@@ -80,25 +92,20 @@ class EpisodeTableViewController: UITableViewController {
     // MARK: Change navigation bar according to its location.
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        
-        
-        let a = tableView.tableHeaderView?.subviews[1]
-    
-        
-        if tableView.contentOffset.y  > a!.frame.origin.y + a!.frame.height{
-            navigationController?.navigationBar.backItem?.backButtonTitle = webtoon!.webtoonTitle
-        }else{
-            navigationController?.navigationBar.backItem?.backButtonTitle = ""
+        if let titleView = tableView.tableHeaderView?.subviews[1]{
+            if tableView.contentOffset.y  > titleView.frame.origin.y + titleView.frame.height - scrollView.safeAreaInsets.top{
+                navigationController?.navigationBar.backItem?.backButtonTitle = webtoon!.webtoonTitle
+            }else{
+                navigationController?.navigationBar.backItem?.backButtonTitle = ""
+            }
         }
-        let viewToAdd = additionalSpace()
         
-        if scrollView.contentOffset.y == 0{
+        let viewToAdd = additionalSpace()
+        if scrollView.contentOffset.y == -scrollView.safeAreaInsets.top{
             navigationController?.navigationBar.barTintColor = .brown
             tableView.addSubview(viewToAdd)
             navigationController?.navigationBar.tintColor = .white
-        }
-        else{
+        }else{
             for view in tableView.subviews{
                 if view.frame.height == 75{
                     view.removeFromSuperview()
@@ -121,8 +128,19 @@ class EpisodeTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(tableView.subviews)
+        // for all episodes need to add m.
+        performSegue(withIdentifier: "showWebtoon", sender: self)
+        
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! LastViewController
+        if let index = tableView.indexPathForSelectedRow{
+            destinationVC.episode = webtoon?.episodeArray[index.row]
+        }
+    }
+    
+
 
     
     // MARK: - Table view data source
