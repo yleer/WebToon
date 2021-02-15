@@ -32,6 +32,18 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
         navigationController?.navigationBar.isHidden = true
+        view.bringSubviewToFront(upperView)
+        upperView.alpha = 0.3
+        view.bringSubviewToFront(scrollView)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == upperCollectionView{
+            let index = Int(upperCollectionView.contentOffset.x / upperCollectionView.frame.size.width)
+            counter = index
+        }else if scrollView == webtoonColectionView{
+            print(scrollView.contentOffset.y)
+        }
     }
     
     // MARK: Upper Collection View.
@@ -146,10 +158,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let index = Int(upperCollectionView.contentOffset.x / upperCollectionView.frame.size.width)
-        counter = index
-    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == webtoonColectionView{
             performSegue(withIdentifier: "webtoon list", sender: self)
