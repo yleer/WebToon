@@ -11,9 +11,8 @@ class EpisodeTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = false
-        
-        
     }
     
 
@@ -240,7 +239,7 @@ class EpisodeTableViewController: UITableViewController {
         author.setContentHuggingPriority(.defaultHigh + 1 , for: .horizontal)
         date.setContentHuggingPriority(.defaultHigh - 1, for: .horizontal)
         
-        imageView.image = UIImage(named: "yori")
+        imageView.image = UIImage(named: "1")
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 3
         title.text = webtoon?.webtoonTitle

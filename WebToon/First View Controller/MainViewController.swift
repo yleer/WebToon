@@ -11,8 +11,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = true
-        
+        navigationController?.navigationBar.isHidden = true
     }
     
     
@@ -37,7 +38,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @IBOutlet weak var upperView: UIView!
     @IBOutlet weak var upperCollectionView: UICollectionView!
-    let upperImage = [UIImage(named: "image1"),UIImage(named: "image2"),UIImage(named: "image3"),UIImage(named: "image4"), UIImage(named: "image5")]
+    let upperImage = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"), UIImage(named: "5")]
     var timer = Timer()
     var counter = 0
     
