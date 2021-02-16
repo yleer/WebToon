@@ -34,9 +34,45 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         navigationController?.navigationBar.isHidden = true
         view.bringSubviewToFront(upperView)
         upperView.alpha = 0.3
-        view.bringSubviewToFront(scrollView)
+        
         self.webtoonColectionView.reloadData()
+        
+       
+        
+        
+    
     }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView,
+                                viewForSupplementaryElementOfKind kind: String,
+                                at indexPath: IndexPath) -> UICollectionReusableView {
+       
+     switch kind {
+     case UICollectionView.elementKindSectionHeader:
+       guard
+         let headerView = collectionView.dequeueReusableSupplementaryView(
+           ofKind: kind,
+           withReuseIdentifier: "dateID",
+           for: indexPath) as? DateHeaderReusableView
+         else {
+           fatalError("Invalid view type")
+       }
+        // to make header stay up top.
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.sectionHeadersPinToVisibleBounds = true
+        
+       return headerView
+     default:
+       // 4
+       assert(false, "Invalid element type")
+     }
+   }
+    
+    
+    
+     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == upperCollectionView{
@@ -67,54 +103,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
-    // MARK: date choosing scroll view part.
-    var labelArray = [UILabel]()
-    @IBOutlet weak var scrollView: UIScrollView!{
-        didSet{
-            scrollView.contentSize = CGSize(width: 480, height: 40)
-            for xCoordinate in 0..<8{
-                let selectDate = UITapGestureRecognizer(target: self, action: #selector(selectDayOfWeek))
-                let label = UILabel(frame: CGRect(x: xCoordinate * 60, y: 0, width: 60, height: 50))
-                label.isUserInteractionEnabled = true
-                label.addGestureRecognizer(selectDate)
-                labelArray.append(label)
-            }
-
-            labelArray[0].text = "월" ; labelArray[0].textAlignment = .center
-            labelArray[1].text = "화" ; labelArray[1].textAlignment = .center
-            labelArray[2].text = "수" ; labelArray[2].textAlignment = .center
-            labelArray[3].text = "목" ; labelArray[3].textAlignment = .center
-            labelArray[4].text = "금" ; labelArray[4].textAlignment = .center
-            labelArray[5].text = "토" ; labelArray[5].textAlignment = .center
-            labelArray[6].text = "일" ; labelArray[6].textAlignment = .center
-            labelArray[7].text = "완결" ; labelArray[7].textAlignment = .center
-            
-            for label in labelArray{
-                scrollView.addSubview(label)
-            }
-            selectedLabel = labelArray[0]
-            selectedLabel?.backgroundColor = #colorLiteral(red: 0, green: 0.6358990073, blue: 0, alpha: 1)
-        }
-    }
     // 기본 월.
     private var selectedLabel : UILabel?
     
-    @objc func selectDayOfWeek(sender: UITapGestureRecognizer){
-        switch sender.state {
-        case .ended:
-            if let chosenLabel = sender.view as? UILabel{
-                selectedLabel?.backgroundColor = .white
-                selectedLabel = chosenLabel
-                selectedLabel?.backgroundColor = #colorLiteral(red: 0, green: 0.6358990073, blue: 0, alpha: 1)
-                if let index = labelArray.firstIndex(of: chosenLabel){
-                    chosenDate = index
-                }
-            }
-        default:
-            print("error")
-        }
-    }
-    
+
     //MARK: collection view part.
     
     var model = Model()
@@ -231,6 +223,5 @@ extension MainViewController : UICollectionViewDelegateFlowLayout{
             return 0
         }
     }
-    
 }
 
