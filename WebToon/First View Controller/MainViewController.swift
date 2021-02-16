@@ -16,7 +16,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         navigationController?.navigationBar.isHidden = true
     }
     
+    @IBOutlet weak var upperCollectionViewHeight: NSLayoutConstraint!
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         upperCollectionView.dataSource = self
@@ -32,15 +34,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
         navigationController?.navigationBar.isHidden = true
-        view.bringSubviewToFront(upperView)
-        upperView.alpha = 0.3
+        view.bringSubviewToFront(upperCollectionView)
+        upperCollectionView.alpha = 0.3
         
         self.webtoonColectionView.reloadData()
-        
-       
-        
-        
-    
+        webtoonColectionView.contentInset.top = 260 - 48
     }
     
     
@@ -80,6 +78,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             counter = index
         }else if scrollView == webtoonColectionView{
             print(scrollView.contentOffset.y)
+            if scrollView.contentOffset.y < 0 {
+                upperCollectionViewHeight.constant = abs(scrollView.contentOffset.y) + 48
+                upperCollectionView.reloadData()
+            }
         }
     }
     
