@@ -21,12 +21,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewDidLoad()
         upperCollectionView.dataSource = self
         upperCollectionView.delegate = self
+        
         webtoonColectionView.dataSource = self
         webtoonColectionView.delegate = self
-        webtoonColectionView.collectionViewLayout = createLayout()
-        webtoonColectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webtoonColectionView?.backgroundColor = .white
         webtoonColectionView.bounces = false
+        
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
@@ -35,6 +35,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         view.bringSubviewToFront(upperView)
         upperView.alpha = 0.3
         view.bringSubviewToFront(scrollView)
+        self.webtoonColectionView.reloadData()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -195,20 +196,40 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 
 extension MainViewController : UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        if collectionView == upperCollectionView{
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }else{
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = upperCollectionView.frame.size
-        return CGSize(width: size.width, height: size.height)
+        if collectionView == upperCollectionView{
+            let size = upperCollectionView.frame.size
+            return CGSize(width: size.width, height: size.height)
+        }else{
+            let widthForLayout = webtoonColectionView.frame.maxX / 3
+            print(webtoonColectionView.frame)
+            return CGSize(width: widthForLayout, height: 200)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
+        if collectionView == upperCollectionView{
+            return 0.0
+        }else{
+            return 0
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
+        if collectionView == upperCollectionView{
+            return 0.0
+        }else{
+            return 0
+        }
     }
     
 }
