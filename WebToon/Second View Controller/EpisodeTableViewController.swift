@@ -11,6 +11,7 @@ class EpisodeTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,500), left: 0, bottom: 0, right: 0   )
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = false
     }

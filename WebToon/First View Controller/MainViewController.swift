@@ -13,11 +13,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewWillAppear(animated)
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.barTintColor = .white
     }
     
     @IBOutlet weak var upperCollectionViewHeight: NSLayoutConstraint!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +38,17 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         upperCollectionView.alpha = 0.3
         
         self.webtoonColectionView.reloadData()
-        webtoonColectionView.contentInset.top = 260 - 48
+        webtoonColectionView.contentInsetAdjustmentBehavior = .never
+        webtoonColectionView.contentInset.top = 260 - 44  - 48
+        
+        let layout = webtoonColectionView.collectionViewLayout as! UICollectionViewFlowLayout
+//        layout.sectionHeadersPinToVisibleBounds = true
+        
+        
+        
     }
+    
+    
     
     
     
@@ -57,9 +66,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
          else {
            fatalError("Invalid view type")
        }
-        // to make header stay up top.
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.sectionHeadersPinToVisibleBounds = true
         
        return headerView
      default:
@@ -68,8 +74,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
      }
    }
     
-    
-    
+    func changeNavigationBarHeight(height : CGFloat ) {
+        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0   )
+    }
      
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -79,10 +86,24 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }else if scrollView == webtoonColectionView{
             print(scrollView.contentOffset.y)
             if scrollView.contentOffset.y < 0 {
-                upperCollectionViewHeight.constant = abs(scrollView.contentOffset.y) + 48
+                upperCollectionViewHeight.constant = abs(scrollView.contentOffset.y) + 44 + 48
                 upperCollectionView.reloadData()
             }
+
+            let layout = webtoonColectionView.collectionViewLayout as! UICollectionViewFlowLayout
+            if scrollView.contentOffset.y >= 0{
+//                layout.sectionHeadersPinToVisibleBounds = true
+                upperCollectionViewHeight.constant = 0
+                upperCollectionView.reloadData()
+
+            }else{
+                layout.sectionHeadersPinToVisibleBounds = false
+                upperCollectionView.reloadData()
+            }
+
         }
+
+
     }
     
     // MARK: Upper Collection View.
@@ -157,6 +178,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == webtoonColectionView{
             performSegue(withIdentifier: "webtoon list", sender: self)
+            changeNavigationBarHeight(height: 500)
 //            navigationController?.pushAnimation(controller: self)
         }
     }
@@ -204,7 +226,7 @@ extension MainViewController : UICollectionViewDelegateFlowLayout{
             return CGSize(width: size.width, height: size.height)
         }else{
             let widthForLayout = webtoonColectionView.frame.maxX / 3
-            print(webtoonColectionView.frame)
+            
             return CGSize(width: widthForLayout, height: 200)
         }
     }
