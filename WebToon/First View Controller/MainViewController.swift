@@ -13,7 +13,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewWillAppear(animated)
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.barTintColor = .white
     }
     
@@ -39,13 +39,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         self.webtoonColectionView.reloadData()
         webtoonColectionView.contentInsetAdjustmentBehavior = .never
-        webtoonColectionView.contentInset.top = 260 - 44  - 48
+        webtoonColectionView.contentInset.top = 260 - 48
         
         let layout = webtoonColectionView.collectionViewLayout as! UICollectionViewFlowLayout
 //        layout.sectionHeadersPinToVisibleBounds = true
-        
-        
-        
     }
     
     
@@ -67,6 +64,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
            fatalError("Invalid view type")
        }
         
+        
        return headerView
      default:
        // 4
@@ -75,7 +73,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
    }
     
     func changeNavigationBarHeight(height : CGFloat ) {
-        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0   )
+        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: min(0,height), right: 0   )
     }
      
     
@@ -86,13 +84,15 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }else if scrollView == webtoonColectionView{
             print(scrollView.contentOffset.y)
             if scrollView.contentOffset.y < 0 {
-                upperCollectionViewHeight.constant = abs(scrollView.contentOffset.y) + 44 + 48
+                upperCollectionViewHeight.constant = abs(scrollView.contentOffset.y) + 48
                 upperCollectionView.reloadData()
+                changeNavigationBarHeight(height: scrollView.contentOffset.y)
+            }else{
+                changeNavigationBarHeight(height: -scrollView.contentOffset.y)
             }
 
             let layout = webtoonColectionView.collectionViewLayout as! UICollectionViewFlowLayout
             if scrollView.contentOffset.y >= 0{
-//                layout.sectionHeadersPinToVisibleBounds = true
                 upperCollectionViewHeight.constant = 0
                 upperCollectionView.reloadData()
 
