@@ -31,14 +31,13 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         navigationController?.navigationBar.isHidden = true
         view.bringSubviewToFront(upperCollectionView)
-        
-    
     }
     
     private func configureUpperView(){
         upperCollectionView.dataSource = self
         upperCollectionView.delegate = self
     }
+    
     private func configureWebtoonCollectionView(){
         webtoonColectionView.dataSource = self
         webtoonColectionView.delegate = self
@@ -46,7 +45,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         layout.sectionHeadersPinToVisibleBounds = true
         webtoonColectionView?.backgroundColor = .white
         upperCollectionView.alpha = 0.3
-        webtoonColectionView.contentInset.top = 260
+        webtoonColectionView.contentInset.top = 260 - 48
         webtoonColectionView.contentInsetAdjustmentBehavior = .never
     }
     
@@ -63,27 +62,36 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             print(scrollView.contentOffset.y)
             
+            // 스크롤 뷰가 맨 위 일떄 더 안 올라가게 막는거. top Bounce 없애기.
             if scrollView.contentOffset.y < 0 && abs(scrollView.contentOffset.y) > defaultUpperViewHeight - statusbarHeight{
                 scrollView.contentInset.top = defaultUpperViewHeight
             }
             
+            
+            
             if scrollView.contentOffset.y < 0 {
+                // MARK: need to fix this part.
+                // upperCollectionView Hight control.
                 upperCollectionViewHeight.constant = abs(scrollView.contentOffset.y) + statusbarHeight
                 upperCollectionView.reloadData()
                 
-                
+        
+                // scroll view가 아래로 더 안내려 가게 ceollection view의 최대 top inset 212로 고정.
+                // scorll view의 최대 inset 212인데 SCROLL view offset 이 그거보다 클때 212 로 고정
                 if abs(scrollView.contentOffset.y) > defaultUpperViewHeight - statusbarHeight{
                     let insetTop : CGFloat = defaultUpperViewHeight - statusbarHeight
                     scrollView.contentInset.top = insetTop
                     
                 }else{
+                    // 상황에 따라 scrollView inset 줄이는 것.
                     let insetTop = abs(scrollView.contentOffset.y)
                     scrollView.contentInset.top = insetTop
                     
                     return
                 }
                 
-            }else if scrollView.contentOffset.y >= 0 {
+            }else  {
+//                 upper view 안보이게 하기.
                 upperCollectionViewHeight.constant = 0
                 upperCollectionView.reloadData()
                 scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
