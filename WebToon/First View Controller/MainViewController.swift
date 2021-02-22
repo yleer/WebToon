@@ -13,7 +13,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewWillAppear(animated)
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.barTintColor = .white
     }
     
@@ -24,13 +23,17 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         configureUpperView()
         configureWebtoonCollectionView()
+        changeNavigationBarHeight(height: -500)
         
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
         
-        navigationController?.navigationBar.isHidden = true
         view.bringSubviewToFront(upperCollectionView)
+        
+        for sub in view.subviews{
+            print(sub.frame)
+        }
     }
     
     private func configureUpperView(){
@@ -44,14 +47,22 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let layout = webtoonColectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.sectionHeadersPinToVisibleBounds = true
         webtoonColectionView?.backgroundColor = .white
-        upperCollectionView.alpha = 0.3
-        webtoonColectionView.contentInset.top = 260 - 48
         webtoonColectionView.contentInsetAdjustmentBehavior = .never
+        
+        // top inset part.
+        webtoonColectionView.contentInset.top = defaultUpperViewHeight
+        
     }
     
     
     private let defaultUpperViewHeight : CGFloat = 260
     private let statusbarHeight = UIApplication.shared.statusBarFrame.height
+
+    
+    func changeNavigationBarHeight(height : CGFloat ) {
+        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0   )
+    }
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == upperCollectionView{
@@ -60,43 +71,49 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         else if scrollView == webtoonColectionView{
             
-            print(scrollView.contentOffset.y)
-            
-            // 스크롤 뷰가 맨 위 일떄 더 안 올라가게 막는거. top Bounce 없애기.
-            if scrollView.contentOffset.y < 0 && abs(scrollView.contentOffset.y) > defaultUpperViewHeight - statusbarHeight{
-                scrollView.contentInset.top = defaultUpperViewHeight
-            }
             
             
             
-            if scrollView.contentOffset.y < 0 {
-                // MARK: need to fix this part.
-                // upperCollectionView Hight control.
-                upperCollectionViewHeight.constant = abs(scrollView.contentOffset.y) + statusbarHeight
-                upperCollectionView.reloadData()
-                
-        
-                // scroll view가 아래로 더 안내려 가게 ceollection view의 최대 top inset 212로 고정.
-                // scorll view의 최대 inset 212인데 SCROLL view offset 이 그거보다 클때 212 로 고정
-                if abs(scrollView.contentOffset.y) > defaultUpperViewHeight - statusbarHeight{
-                    let insetTop : CGFloat = defaultUpperViewHeight - statusbarHeight
-                    scrollView.contentInset.top = insetTop
-                    
+//            // 스크롤 뷰가 맨 위 일떄 더 안 올라가게 막는거. top Bounce 없애기.
+//            if scrollView.contentOffset.y < 0 && abs(scrollView.contentOffset.y) > 260 {
+//                scrollView.contentInset.top = defaultUpperViewHeight
+//            }
+//
+            // nav bar frame : (0.0, 48.0, 414.0, 44.0)     y ends at 92.
+            
+            // if scrollview.contentOffset.y == -92.
+//            print(navigationController?.navigationBar.frame.maxY)
+            if scrollView.contentOffset.y < 0  && scrollView.contentOffset.y > -defaultUpperViewHeight{
+                // nav bar 상황에 따라.
+//                print("first if : \(scrollView.contentOffset.y)")
+                if abs(scrollView.contentOffset.y) <= navigationController!.navigationBar.frame.maxY{
+                    // scrollview의 bound.y가 navigationController!.navigationBar.frame.maxY 보다 작거나 할때 inset 항상 유지.
+//                    print("should stop scrolling")
+                    scrollView.contentInset.top = navigationController!.navigationBar.frame.maxY
                 }else{
-                    // 상황에 따라 scrollView inset 줄이는 것.
-                    let insetTop = abs(scrollView.contentOffset.y)
-                    scrollView.contentInset.top = insetTop
+                    // 아직 scrollview bound y가 네비게이션 바 위치까지 안왔을때. 네비베이션 바 위치 조정해야됨.
+                    // 여기서만 네비게이션 바 inset 조정하면 될듯.
                     
-                    return
+                    // MARK: 이 수치만 맞게 하자.
+                    changeNavigationBarHeight(height: scrollView.contentOffset.y + 92) //
+                    upperCollectionViewHeight.constant = -scrollView.contentOffset.y
+//                    print("first if : \(scrollView.contentOffset.y)")
+//                    print(upperCollectionViewHeight.constant)
+                    scrollView.contentInset.top = -scrollView.contentOffset.y
                 }
                 
-            }else  {
-//                 upper view 안보이게 하기.
+            }else if scrollView.contentOffset.y < -defaultUpperViewHeight{
+                // nav bar 항상 안 보여야 됨
+//                print("second if : \(scrollView.contentOffset.y)")
+                upperCollectionViewHeight.constant = defaultUpperViewHeight
+                scrollView.contentInset.top = defaultUpperViewHeight
+            }else if scrollView.contentOffset.y >= 0{
+                // nav bar 항상 보여야 됨
                 upperCollectionViewHeight.constant = 0
-                upperCollectionView.reloadData()
-                scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                return
+//                print("last if : \(scrollView.contentOffset.y)")
+                scrollView.contentInset.top = navigationController!.navigationBar.frame.maxY
             }
+            upperCollectionView.reloadData()
         }
     }
     

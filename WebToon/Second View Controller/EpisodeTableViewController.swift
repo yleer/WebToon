@@ -11,7 +11,6 @@ class EpisodeTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,500), left: 0, bottom: 0, right: 0   )
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = false
     }
@@ -43,6 +42,7 @@ class EpisodeTableViewController: UITableViewController {
     
     
     override func viewDidLoad() {
+        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,-200), left: 0, bottom: 0, right: 0   )
         super.viewDidLoad()
         tableView.delegate = self
 //        self.navigationController?.navigationBar.shadowImage = UIImage()
