@@ -38,19 +38,11 @@ class EpisodeTableViewController: UITableViewController {
     }
     
     var stringDate : String?
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
-//        navigationController?.navigationBar.isHidden = true
-//        navigationController?.navigationBar.isHidden = false
         configureTopAndBottom()
-//        print(navigationController?.navigationBar.isHidden)
-        print(navigationController?.navigationBar.frame)
-        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top:0, left: 0, bottom: 0, right: 0)
-        print(navigationController?.navigationBar.frame)
     }
     
     private func configureTopAndBottom(){
@@ -62,14 +54,9 @@ class EpisodeTableViewController: UITableViewController {
         tableView.bringSubviewToFront(tableView.tableHeaderView!)
     }
     
-    
-    
     // MARK: Configuring navigation tab bar.
     private func navigtionbarSetup(){
-        // MARK: need to fix isTranslucent part.
         navigationController?.navigationBar.isTranslucent = false
-        
-        
         
         navigationController?.navigationBar.topItem?.backButtonTitle = " "
         navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: moreButtonSetUp()), UIBarButtonItem(customView: interestButtonSetUp())]
@@ -96,8 +83,6 @@ class EpisodeTableViewController: UITableViewController {
     // MARK: Change navigation bar according to its location.
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(navigationController?.navigationBar.frame)
-        
         if let titleView = tableView.tableHeaderView?.subviews[1]{
             if tableView.contentOffset.y  > titleView.frame.origin.y + titleView.frame.height - scrollView.safeAreaInsets.top{
                 navigationController?.navigationBar.backItem?.backButtonTitle = webtoon!.webtoonTitle
@@ -137,8 +122,6 @@ class EpisodeTableViewController: UITableViewController {
         // for all episodes need to add m.
 //        performSegue(withIdentifier: "showWebtoon", sender: self)
         changeNavigationBarHeight(height: 0)
-        print("did selected: \(navigationController?.navigationBar.frame)")
-        
     }
     
     func changeNavigationBarHeight(height : CGFloat ) {
