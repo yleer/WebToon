@@ -42,12 +42,15 @@ class EpisodeTableViewController: UITableViewController {
     
     
     override func viewDidLoad() {
-        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,-200), left: 0, bottom: 0, right: 0   )
         super.viewDidLoad()
         tableView.delegate = self
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isHidden = false
+//        navigationController?.navigationBar.isHidden = true
+//        navigationController?.navigationBar.isHidden = false
         configureTopAndBottom()
+//        print(navigationController?.navigationBar.isHidden)
+        print(navigationController?.navigationBar.frame)
+        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top:0, left: 0, bottom: 0, right: 0)
+        print(navigationController?.navigationBar.frame)
     }
     
     private func configureTopAndBottom(){
@@ -93,6 +96,8 @@ class EpisodeTableViewController: UITableViewController {
     // MARK: Change navigation bar according to its location.
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(navigationController?.navigationBar.frame)
+        
         if let titleView = tableView.tableHeaderView?.subviews[1]{
             if tableView.contentOffset.y  > titleView.frame.origin.y + titleView.frame.height - scrollView.safeAreaInsets.top{
                 navigationController?.navigationBar.backItem?.backButtonTitle = webtoon!.webtoonTitle
@@ -130,8 +135,14 @@ class EpisodeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // for all episodes need to add m.
-        performSegue(withIdentifier: "showWebtoon", sender: self)
+//        performSegue(withIdentifier: "showWebtoon", sender: self)
+        changeNavigationBarHeight(height: 0)
+        print("did selected: \(navigationController?.navigationBar.frame)")
         
+    }
+    
+    func changeNavigationBarHeight(height : CGFloat ) {
+        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

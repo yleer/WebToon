@@ -14,6 +14,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .white
+//        changeNavigationBarHeight(height: -500)
+        print("appeared")
     }
     
     @IBOutlet weak var upperCollectionViewHeight: NSLayoutConstraint!
@@ -23,7 +25,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         configureUpperView()
         configureWebtoonCollectionView()
-        changeNavigationBarHeight(height: -500)
+        changeNavigationBarHeight(height: -260 + 44 + statusbarHeight)
         
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
@@ -34,6 +36,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         for sub in view.subviews{
             print(sub.frame)
         }
+        navBarMaxY = navigationController!.navigationBar.frame.maxY
     }
     
     private func configureUpperView(){
@@ -57,10 +60,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     private let defaultUpperViewHeight : CGFloat = 260
     private let statusbarHeight = UIApplication.shared.statusBarFrame.height
+    private var navBarMaxY : CGFloat?
 
     
     func changeNavigationBarHeight(height : CGFloat ) {
-        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0   )
+        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0)
+        
     }
     
     
@@ -79,14 +84,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 //                scrollView.contentInset.top = defaultUpperViewHeight
 //            }
 //
-            // nav bar frame : (0.0, 48.0, 414.0, 44.0)     y ends at 92.
-            
-            // if scrollview.contentOffset.y == -92.
-//            print(navigationController?.navigationBar.frame.maxY)
+
             if scrollView.contentOffset.y < 0  && scrollView.contentOffset.y > -defaultUpperViewHeight{
                 // nav bar 상황에 따라.
 //                print("first if : \(scrollView.contentOffset.y)")
-                if abs(scrollView.contentOffset.y) <= navigationController!.navigationBar.frame.maxY{
+                if abs(scrollView.contentOffset.y) <= navigationController!.navigationBar.frame.maxY {
                     // scrollview의 bound.y가 navigationController!.navigationBar.frame.maxY 보다 작거나 할때 inset 항상 유지.
 //                    print("should stop scrolling")
                     scrollView.contentInset.top = navigationController!.navigationBar.frame.maxY
@@ -94,8 +96,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
                     // 아직 scrollview bound y가 네비게이션 바 위치까지 안왔을때. 네비베이션 바 위치 조정해야됨.
                     // 여기서만 네비게이션 바 inset 조정하면 될듯.
                     
-                    // MARK: 이 수치만 맞게 하자.
-                    changeNavigationBarHeight(height: scrollView.contentOffset.y + 92) //
+                    // MARK: 이 수치만 맞게 하자.   92 디바이스 마다 맞게 해야됨. nav bar max y
+//                    print(scrollView.contentOffset.y + navBarMaxY! + statusbarHeight)
+                    print(navigationController?.navigationBar.frame)
+                    changeNavigationBarHeight(height: scrollView.contentOffset.y + navBarMaxY! + statusbarHeight + 11) //
+//                    changeNavigationBarHeight(height: scrollView.contentOffset.y + navBarMaxY! )
                     upperCollectionViewHeight.constant = -scrollView.contentOffset.y
 //                    print("first if : \(scrollView.contentOffset.y)")
 //                    print(upperCollectionViewHeight.constant)
@@ -185,15 +190,22 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             }
         }
         
-        
+
+    
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             if collectionView == webtoonColectionView{
-                performSegue(withIdentifier: "webtoon list", sender: self)
-                //            navigationController?.pushAnimation(controller: self)
+                changeNavigationBarHeight(height: 0)
+                
+                    print("perfor Seg : \(navigationController?.navigationBar.frame)")
+                    performSegue(withIdentifier: "webtoon list", sender: self)
+                
+                // navigationController?.pushAnimation(controller: self)
             }
         }
+    
         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             let destinationVC = segue.destination as! EpisodeTableViewController
+            
             if let index = webtoonColectionView.indexPathsForSelectedItems?.first?.item{
                 destinationVC.webtoon = model.webtoon[chosenDate][index]
                 destinationVC.date = chosenDate
