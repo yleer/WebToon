@@ -16,7 +16,13 @@ class LastViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var parentView: UIView!
     @IBOutlet var webView: WKWebView!
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.isStatusBarHidden = false
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+    }
+      
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,18 +33,12 @@ class LastViewController: UIViewController, UIScrollViewDelegate {
             webView.load(myRequest)
         }
         webView.scrollView.delegate = self
-        navigationController?.navigationBar.isHidden = false
         
         if let title = episode?.episodeTitle{
             navigationController?.navigationBar.topItem?.backButtonTitle = title
         }
-        
-     
     }
 
-    
-    
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.contentInsetAdjustmentBehavior = .never
         if scrollView.bounds.origin.y > 0{
