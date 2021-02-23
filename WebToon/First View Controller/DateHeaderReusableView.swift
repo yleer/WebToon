@@ -8,16 +8,18 @@
 import UIKit
 
 class DateHeaderReusableView: UICollectionReusableView {
-        
-    var labelArray = [UILabel]()
-    private var selectedLabel : UILabel?
-    @IBOutlet weak var blankView: UIView!
+    
+    @IBOutlet weak var blankView: UIView!{
+        didSet{
+            print("blankViewSize : \(blankView.frame)")
+        }
+    }
     @IBOutlet weak var dateScroll: UIScrollView!{
         didSet{
             dateScroll.contentSize = CGSize(width: 480, height: 40)
             for xCoordinate in 0..<8{
                 let selectDate = UITapGestureRecognizer(target: self, action: #selector(selectDayOfWeek))
-                let label = UILabel(frame: CGRect(x: xCoordinate * 60, y: 0, width: 60, height: 50))
+                let label = UILabel(frame: CGRect(x: xCoordinate * 60, y: 0, width: 60, height: 40))
                 label.isUserInteractionEnabled = true
                 label.addGestureRecognizer(selectDate)
                 labelArray.append(label)
@@ -37,9 +39,15 @@ class DateHeaderReusableView: UICollectionReusableView {
             }
             selectedLabel = labelArray[0]
             selectedLabel?.backgroundColor = #colorLiteral(red: 0, green: 0.6358990073, blue: 0, alpha: 1)
+            print("scrollView : \(dateScroll.frame)")
         }
+        
     }
-    var chosenDate : Int = 0
+    
+    var labelArray = [UILabel]()
+    private var selectedLabel : UILabel?
+    
+    var chosenDate : Int = 5
     
     @objc func selectDayOfWeek(sender: UITapGestureRecognizer){
         switch sender.state {
@@ -49,6 +57,7 @@ class DateHeaderReusableView: UICollectionReusableView {
                 selectedLabel = chosenLabel
                 selectedLabel?.backgroundColor = #colorLiteral(red: 0, green: 0.6358990073, blue: 0, alpha: 1)
                 if let index = labelArray.firstIndex(of: chosenLabel){
+                    delegate?.changeDate(index: index)
                     chosenDate = index
                 }
             }
@@ -56,4 +65,13 @@ class DateHeaderReusableView: UICollectionReusableView {
             print("error")
         }
     }
+    
+    
+    var delegate : headerDelegate?
+}
+
+
+
+protocol headerDelegate {
+    func changeDate(index : Int)
 }

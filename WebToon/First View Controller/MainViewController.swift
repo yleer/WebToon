@@ -7,34 +7,32 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
+class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, headerDelegate  {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
-    
-    @IBOutlet weak var upperCollectionViewHeight: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
         configureUpperView()
         configureWebtoonCollectionView()
-//        changeNavigationBarHeight(height: -260 + 44 + statusbarHeight)
-        
+        slideUpperView()
+        view.bringSubviewToFront(upperCollectionView)
+    }
+    
+    // MARK: Setting Upper Collection View and Webtoon Collection View.
+    private func slideUpperView(){
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
-        
-        view.bringSubviewToFront(upperCollectionView)
-        navBarMaxY = navigationController!.navigationBar.frame.maxY
-        
-        // nav nar part.
     }
-
+    
     private func configureUpperView(){
         upperCollectionView.dataSource = self
         upperCollectionView.delegate = self
@@ -53,17 +51,16 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
     }
     
-    
     private let defaultUpperViewHeight : CGFloat = 260
     private let statusbarHeight = UIApplication.shared.statusBarFrame.height
-    private var navBarMaxY : CGFloat?
-
     
-//    func changeNavigationBarHeight(height : CGFloat ) {
-//        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0)
-//
-//    }
     
+    //    func changeNavigationBarHeight(height : CGFloat ) {
+    //        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0)
+    //
+    //    }
+    
+    @IBOutlet weak var upperCollectionViewHeight: NSLayoutConstraint!
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == upperCollectionView{
@@ -74,177 +71,158 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             // 스크롤 뷰가 맨 위 일떄 더 안 올라가게 막는거. top Bounce 없애기.
             if scrollView.contentOffset.y < 0 && abs(scrollView.contentOffset.y) > defaultUpperViewHeight {
-//                print(scrollView.contentInset)
                 scrollView.contentOffset.y = -defaultUpperViewHeight
-                
+                upperCollectionViewHeight.constant = defaultUpperViewHeight
             }
-
+            print(scrollView.contentOffset.y)
             if scrollView.contentOffset.y < 0  && scrollView.contentOffset.y > -defaultUpperViewHeight{
                 // nav bar 상황에 따라.
-                if abs(scrollView.contentOffset.y) <= navigationController!.navigationBar.frame.maxY {
-                    // scrollview의 bound.y가 navigationController!.navigationBar.frame.maxY 보다 작거나 할때 inset 항상 유지.
+//                if abs(scrollView.contentOffset.y) <= navigationController!.navigationBar.frame.maxY {
+//                    // scrollview의 bound.y가 navigationController!.navigationBar.frame.maxY 보다 작거나 할때 inset 항상 유지.
+//                    scrollView.contentInset.top = navigationController!.navigationBar.frame.maxY
+//                }else{
+//                    upperCollectionViewHeight.constant = -scrollView.contentOffset.y
+//                    scrollView.contentInset.top = -scrollView.contentOffset.y
+//                }
+                
+                if scrollView.safeAreaInsets.top >= -scrollView.contentOffset.y{
+                    upperCollectionViewHeight.constant = 0
                     scrollView.contentInset.top = navigationController!.navigationBar.frame.maxY
                 }else{
-                    // 아직 scrollview bound y가 네비게이션 바 위치까지 안왔을때. 네비베이션 바 위치 조정해야됨.
-                    // 여기서만 네비게이션 바 inset 조정하면 될듯.
-                    
-                    // MARK: 이 수치만 맞게 하자.   92 디바이스 마다 맞게 해야됨. nav bar max y
-                    // 이 수치가 최소 -status bar hegiht.
-//                    changeNavigationBarHeight(height: scrollView.contentOffset.y + 216 - statusbarHeight - 1 ) //
-//                    changeNavigationBarHeight(height: scrollView.contentOffset.y + navBarMaxY! )
                     upperCollectionViewHeight.constant = -scrollView.contentOffset.y
                     scrollView.contentInset.top = -scrollView.contentOffset.y
                 }
-            }else if scrollView.contentOffset.y < -defaultUpperViewHeight{
-                // nav bar 항상 안 보여야 됨
-                upperCollectionViewHeight.constant = defaultUpperViewHeight
-                scrollView.contentInset.top = defaultUpperViewHeight
+                
             }else if scrollView.contentOffset.y >= 0{
                 // nav bar 항상 보여야 됨
                 upperCollectionViewHeight.constant = 0
-//                print("last if : \(scrollView.contentOffset.y)")
                 scrollView.contentInset.top = navigationController!.navigationBar.frame.maxY
             }
             upperCollectionView.reloadData()
         }
     }
     
-    // MARK: Upper Collection View.
-        
-        @IBOutlet weak var upperCollectionView: UICollectionView!
-        let upperImage = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"), UIImage(named: "5")]
-        var timer = Timer()
-        var counter = 0
-        
-        @objc func changeImage(){
-            if counter < upperImage.count{
-                let index = IndexPath(item: counter, section: 0)
-                upperCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
-                counter += 1
-            }else{
-                counter = 0
-                let index = IndexPath(item: counter, section: 0)
-                upperCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
-            }
-        }
-        
-        // 기본 월.
-        private var selectedLabel : UILabel?
-        
-        
-        //MARK: collection view part.
-        
-        var model = Model()
-        var chosenDate : Int = 0{
-            didSet{
-                webtoonColectionView.reloadData()
-            }
-        }
-        @IBOutlet weak var webtoonColectionView: UICollectionView!
-        
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            if collectionView == webtoonColectionView{
-                return model.webtoon[chosenDate].count
-            }else{
-                return upperImage.count
-            }
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            if collectionView == webtoonColectionView{
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "webtoon thumnail", for: indexPath) as! WebToonCollectionViewCell
-                
-                cell.layer.borderColor = UIColor.gray.cgColor
-                cell.layer.borderWidth = 0.3
-                
-                cell.thumnailUrl = model.webtoon[chosenDate][indexPath.row].webtoonThumNailUrl
-                cell.title.text = model.webtoon[chosenDate][indexPath.row].webtoonTitle
-                cell.author.text = model.webtoon[chosenDate][indexPath.row].webtoonAuthor
-                cell.rating.text = "★" + model.webtoon[chosenDate][indexPath.row].webtoonRating
-                cell.rating.textColor = .red
-                cell.author.textColor = .gray
-                return cell
-            }else{
-                let itemToShow = upperImage[indexPath.row % upperImage.count]
-                
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upper view cell", for: indexPath) as! UpperCollectionViewCell
-                
-                cell.imageView.image = itemToShow
-                cell.imageView.sizeToFit()
-                
-                return cell
-            }
-        }
-        
+    // MARK: Configure Upper Collection View.
     
-        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            if collectionView == webtoonColectionView{
-                performSegue(withIdentifier: "webtoon list", sender: self)
-                
-                // navigationController?.pushAnimation(controller: self)
-            }
-        }
+    @IBOutlet weak var upperCollectionView: UICollectionView!
+    let upperImage = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"), UIImage(named: "5")]
+    var timer = Timer()
+    var counter = 0
     
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            let destinationVC = segue.destination as! EpisodeTableViewController
-            destinationVC.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            
-            if let index = webtoonColectionView.indexPathsForSelectedItems?.first?.item{
-                destinationVC.webtoon = model.webtoon[chosenDate][index]
-                destinationVC.date = chosenDate
-            }
-        }
-        
-        private func createLayout() -> UICollectionViewLayout {
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3),
-                                                  heightDimension: .fractionalHeight(1.0))
-            
-            
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .fractionalWidth(0.459))
-            
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                           subitems: [item])
-            
-            let section = NSCollectionLayoutSection(group: group)
-            
-            let layout = UICollectionViewCompositionalLayout(section: section)
-            return layout
+    @objc func changeImage(){
+        if counter < upperImage.count{
+            let index = IndexPath(item: counter, section: 0)
+            upperCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
+            counter += 1
+        }else{
+            counter = 0
+            let index = IndexPath(item: counter, section: 0)
+            upperCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
         }
     }
     
-    extension MainViewController : UICollectionViewDelegateFlowLayout{
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            if collectionView == upperCollectionView{
-                return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            }else{
-                return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            }
+    // MARK: Configure Webtoon collection view.
+    @IBOutlet weak var webtoonColectionView: UICollectionView!
+    
+    var model = Model()
+    
+    func changeDate(index: Int) {
+        chosenDate = index
+    }
+    
+    var chosenDate : Int = 0{
+        didSet{
+            webtoonColectionView.reloadData()
+        }
+    }
+    
+    // MARK: Collection Views data source and delegate methods.
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == webtoonColectionView{
+            return model.webtoon[chosenDate].count
+        }else{
+            return upperImage.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == webtoonColectionView{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "webtoon thumnail", for: indexPath) as! WebToonCollectionViewCell
             
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            if collectionView == upperCollectionView{
-                let size = upperCollectionView.frame.size
-                return CGSize(width: size.width, height: size.height)
-            }else{
-                let widthForLayout = webtoonColectionView.frame.maxX / 3
-                
-                return CGSize(width: widthForLayout, height: 200)
-            }
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            if collectionView == upperCollectionView{
-                return 0.0
-            }else{
-                return 0
-            }
+            cell.layer.borderColor = UIColor.gray.cgColor
+            cell.layer.borderWidth = 0.3
             
+            cell.thumnailUrl = model.webtoon[chosenDate][indexPath.row].webtoonThumNailUrl
+            cell.title.text = model.webtoon[chosenDate][indexPath.row].webtoonTitle
+            cell.author.text = model.webtoon[chosenDate][indexPath.row].webtoonAuthor
+            cell.rating.text = "★" + model.webtoon[chosenDate][indexPath.row].webtoonRating
+            cell.rating.textColor = .red
+            cell.author.textColor = .gray
+            return cell
+        }else{
+            let itemToShow = upperImage[indexPath.row % upperImage.count]
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upper view cell", for: indexPath) as! UpperCollectionViewCell
+            
+            cell.imageView.image = itemToShow
+            cell.imageView.sizeToFit()
+            
+            return cell
+        }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == webtoonColectionView{
+            performSegue(withIdentifier: "webtoon list", sender: self)
+            
+            //                 navigationController?.pushAnimation(controller: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! EpisodeTableViewController
+        destinationVC.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        if let index = webtoonColectionView.indexPathsForSelectedItems?.first?.item{
+            destinationVC.webtoon = model.webtoon[chosenDate][index]
+            destinationVC.date = chosenDate
+        }
+    }
+}
+
+
+// MARK: Collection View FlowLayout part.
+extension MainViewController : UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if collectionView == upperCollectionView{
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }else{
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == upperCollectionView{
+            let size = upperCollectionView.frame.size
+            return CGSize(width: size.width, height: size.height)
+        }else{
+            let widthForLayout = webtoonColectionView.frame.maxX / 3
+            
+            return CGSize(width: widthForLayout, height: 200)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if collectionView == upperCollectionView{
+            return 0.0
+        }else{
+            return 0
+        }
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == upperCollectionView{
             return 0.0
@@ -252,29 +230,30 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             return 0
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
         
-        func collectionView(_ collectionView: UICollectionView,
-                            viewForSupplementaryElementOfKind kind: String,
-                            at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "dateID",
+                    for: indexPath) as? DateHeaderReusableView
             
-            switch kind {
-            case UICollectionView.elementKindSectionHeader:
-                guard
-                    let headerView = collectionView.dequeueReusableSupplementaryView(
-                        ofKind: kind,
-                        withReuseIdentifier: "dateID",
-                        for: indexPath) as? DateHeaderReusableView
-                else {
-                    fatalError("Invalid view type")
-                }
-                
-                
-                return headerView
-            default:
-                // 4
-                assert(false, "Invalid element type")
+            else {
+                fatalError("Invalid view type")
             }
+            
+            headerView.delegate = self
+            return headerView
+        default:
+            // 4
+            assert(false, "Invalid element type")
         }
-        
+    }
+    
 }
 

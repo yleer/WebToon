@@ -77,7 +77,6 @@
 				88A56BBD25BC4E12009182F5 /* MainViewController.swift */,
 				88FEE1C125DB66A20015B9D9 /* DateHeaderReusableView.swift */,
 				882A70F725C41B5100302549 /* UpperCollectionViewCell.swift */,
-				881B920125D7D1D800DDF19A /* LastViewController.swift */,
 			);
 			path = "First View Controller";
 			sourceTree = "<group>";
@@ -113,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				88A56BB325BC36BE009182F5 /* Info.plist */,
+				88BC77BE25E4B63300ECD5C1 /* Last View Controller */,
 				884F2B9E25C9305300E0F22A /* First View Controller */,
 				88A56BAB25BC36BD009182F5 /* Main.storyboard */,
 				88969AB125CA43430055D8D2 /* Second View Controller */,
@@ -131,6 +131,14 @@
 				88A56BB025BC36BE009182F5 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88BC77BE25E4B63300ECD5C1 /* Last View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				881B920125D7D1D800DDF19A /* LastViewController.swift */,
+			);
+			path = "Last View Controller";
 			sourceTree = "<group>";
 		};
 		88CCBBCB25BFD62B004BA013 /* Model */ = {

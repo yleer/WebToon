@@ -14,6 +14,9 @@ class EpisodeTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
 
@@ -263,7 +266,7 @@ class EpisodeTableViewController: UITableViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        label.text = "This app is made by me.\nClonning Naver Webtoon for practice."
+        label.text = "I made this.\nClonning Naver Webtoon for practice."
         label.numberOfLines = 0
         
         footer.addSubview(label)

@@ -27,26 +27,14 @@ class LastViewController: UIViewController, UIScrollViewDelegate {
             webView.load(myRequest)
         }
         webView.scrollView.delegate = self
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = false
         
         if let title = episode?.episodeTitle{
             navigationController?.navigationBar.topItem?.backButtonTitle = title
         }
         
-        let tap = UISwipeGestureRecognizer(target: self, action: #selector(Tap))
-        let ll = UIPanGestureRecognizer(target: self, action: #selector(Tap))
-        parentView.addGestureRecognizer(tap)
-        parentView.addGestureRecognizer(ll)
-        webView.scrollView.addGestureRecognizer(tap)
-        
-
+     
     }
-    
-    @objc func Tap(){
-        print("Hdfg")
-    }
-    
-    
 
     
     
