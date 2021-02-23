@@ -14,8 +14,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .white
-//        changeNavigationBarHeight(height: -500)
-        print("appeared")
     }
     
     @IBOutlet weak var upperCollectionViewHeight: NSLayoutConstraint!
@@ -32,11 +30,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
         view.bringSubviewToFront(upperCollectionView)
-        
-        for sub in view.subviews{
-            print(sub.frame)
-        }
         navBarMaxY = navigationController!.navigationBar.frame.maxY
+        
+        // nav nar part.
     }
 
     private func configureUpperView(){
@@ -63,10 +59,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     private var navBarMaxY : CGFloat?
 
     
-    func changeNavigationBarHeight(height : CGFloat ) {
-        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0)
-        
-    }
+//    func changeNavigationBarHeight(height : CGFloat ) {
+//        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0)
+//
+//    }
     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -78,11 +74,9 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             // 스크롤 뷰가 맨 위 일떄 더 안 올라가게 막는거. top Bounce 없애기.
             if scrollView.contentOffset.y < 0 && abs(scrollView.contentOffset.y) > defaultUpperViewHeight {
-                print("this working?")
-                print(scrollView.contentInset)
+//                print(scrollView.contentInset)
                 scrollView.contentOffset.y = -defaultUpperViewHeight
-                upperCollectionView.reloadData()
-                webtoonColectionView.reloadData()
+                
             }
 
             if scrollView.contentOffset.y < 0  && scrollView.contentOffset.y > -defaultUpperViewHeight{
@@ -95,12 +89,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
                     // 여기서만 네비게이션 바 inset 조정하면 될듯.
                     
                     // MARK: 이 수치만 맞게 하자.   92 디바이스 마다 맞게 해야됨. nav bar max y
-                    changeNavigationBarHeight(height: scrollView.contentOffset.y + navBarMaxY! + statusbarHeight + 11) //
+                    // 이 수치가 최소 -status bar hegiht.
+//                    changeNavigationBarHeight(height: scrollView.contentOffset.y + 216 - statusbarHeight - 1 ) //
 //                    changeNavigationBarHeight(height: scrollView.contentOffset.y + navBarMaxY! )
                     upperCollectionViewHeight.constant = -scrollView.contentOffset.y
                     scrollView.contentInset.top = -scrollView.contentOffset.y
                 }
-                
             }else if scrollView.contentOffset.y < -defaultUpperViewHeight{
                 // nav bar 항상 안 보여야 됨
                 upperCollectionViewHeight.constant = defaultUpperViewHeight
@@ -117,7 +111,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     // MARK: Upper Collection View.
         
-        @IBOutlet weak var upperView: UIView!
         @IBOutlet weak var upperCollectionView: UICollectionView!
         let upperImage = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"), UIImage(named: "5")]
         var timer = Timer()
@@ -186,9 +179,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             if collectionView == webtoonColectionView{
-                changeNavigationBarHeight(height: 0)
-
-                print("perfor Seg : \(navigationController?.navigationBar.frame)")
                 performSegue(withIdentifier: "webtoon list", sender: self)
                 
                 // navigationController?.pushAnimation(controller: self)
@@ -197,6 +187,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             let destinationVC = segue.destination as! EpisodeTableViewController
+            destinationVC.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             
             if let index = webtoonColectionView.indexPathsForSelectedItems?.first?.item{
                 destinationVC.webtoon = model.webtoon[chosenDate][index]

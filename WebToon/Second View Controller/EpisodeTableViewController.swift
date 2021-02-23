@@ -10,6 +10,7 @@ import UIKit
 class EpisodeTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barTintColor = .brown
         super.viewWillAppear(animated)
         UIApplication.shared.isStatusBarHidden = false
         navigationController?.navigationBar.isTranslucent = false
@@ -38,11 +39,17 @@ class EpisodeTableViewController: UITableViewController {
     }
     
     var stringDate : String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
+        tableView.contentInsetAdjustmentBehavior = .never
         configureTopAndBottom()
+        
+        
+        navigationController?.additionalSafeAreaInsets = .zero
+        
+    
     }
     
     private func configureTopAndBottom(){
@@ -120,7 +127,7 @@ class EpisodeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // for all episodes need to add m.
-//        performSegue(withIdentifier: "showWebtoon", sender: self)
+        performSegue(withIdentifier: "showWebtoon", sender: self)
         changeNavigationBarHeight(height: 0)
     }
     
