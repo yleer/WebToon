@@ -17,6 +17,7 @@ class EpisodeTableViewController: UITableViewController {
         navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
 

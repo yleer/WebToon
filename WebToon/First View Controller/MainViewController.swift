@@ -16,6 +16,15 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        
+        if webtoonColectionView.contentOffset.y > -defaultUpperViewHeight + 15{
+
+            navigationController?.setNavigationBarHidden(false, animated: true)
+        }else{
+            navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+
     }
     
     override func viewDidLoad() {
@@ -24,7 +33,47 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         configureWebtoonCollectionView()
         slideUpperView()
         view.bringSubviewToFront(upperCollectionView)
+        navigtionbarSetup()
+    
     }
+    
+    
+    
+    private func navigtionbarSetup(){
+        navigationItem.title = "Naver Webtoon"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: cookieButton())
+        navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: searchButton()), UIBarButtonItem(customView: smileButton())]
+      
+    }
+    
+    private func cookieButton() -> UIButton{
+        let cookieButton = UIButton(type: .system)
+        cookieButton.setTitle("🍪", for: .normal)
+        cookieButton.titleLabel?.font = .systemFont(ofSize: 20)
+        cookieButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        return cookieButton
+    }
+    
+    private func smileButton() -> UIButton{
+        let interestButton = UIButton(type: .system)
+        interestButton.setTitle("😀", for: .normal)
+        interestButton.titleLabel?.font = .systemFont(ofSize: 20)
+        interestButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        return interestButton
+    }
+    
+    private func searchButton() -> UIButton{
+        let moreButton = UIButton(type: .system)
+        moreButton.setTitle("🔍", for: .normal)
+        moreButton.titleLabel?.font = .systemFont(ofSize: 30)
+        moreButton.contentHorizontalAlignment = .right
+        moreButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        return moreButton
+    }
+
+    
+    
+    
     
     // MARK: Setting Upper Collection View and Webtoon Collection View.
     private func slideUpperView(){
@@ -74,7 +123,17 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
                 scrollView.contentOffset.y = -defaultUpperViewHeight
                 upperCollectionViewHeight.constant = defaultUpperViewHeight
             }
-            print(scrollView.contentOffset.y)
+              
+           
+            // nav bar sliding.
+            if scrollView.contentOffset.y > -defaultUpperViewHeight + 15{
+                navigationController?.setNavigationBarHidden(false, animated: true)
+            }else{
+                navigationController?.setNavigationBarHidden(true, animated: true)
+            }
+
+            
+
             if scrollView.contentOffset.y < 0  && scrollView.contentOffset.y > -defaultUpperViewHeight{
                 // nav bar 상황에 따라.
 //                if abs(scrollView.contentOffset.y) <= navigationController!.navigationBar.frame.maxY {
