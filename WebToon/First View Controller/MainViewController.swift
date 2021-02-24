@@ -34,7 +34,15 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         slideUpperView()
         view.bringSubviewToFront(upperCollectionView)
         navigtionbarSetup()
+        
+        
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeToChangeDate))
+        webtoonColectionView.addGestureRecognizer(swipeGesture)
     
+    }
+    
+    @objc func swipeToChangeDate(){
+        
     }
     
     
