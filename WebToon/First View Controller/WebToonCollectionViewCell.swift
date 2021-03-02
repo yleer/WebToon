@@ -5,6 +5,9 @@
 //  Created by Yundong Lee on 2021/01/24.
 //
 
+//
+// webtoon collection view webtoon thumnail.
+//
 import UIKit
 
 class WebToonCollectionViewCell: UICollectionViewCell {
@@ -32,8 +35,6 @@ class WebToonCollectionViewCell: UICollectionViewCell {
                         }else{
                             print("no image available")
                         }
-                        
-                        
                     }
                 }
             }

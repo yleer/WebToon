@@ -18,7 +18,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
         
-        if webtoonColectionView.contentOffset.y > -defaultUpperViewHeight + 15{
+        if webtoonColectionView.contentOffset.y > -defaultUpperViewHeight + additionalSpaceForNavBarShow{
 
             navigationController?.setNavigationBarHidden(false, animated: true)
         }else{
@@ -30,71 +30,63 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUpperView()
+        navigtionbarSetup()
         configureWebtoonCollectionView()
         slideUpperView()
         view.bringSubviewToFront(upperCollectionView)
-        navigtionbarSetup()
-        
-        
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeToChangeDate))
-        webtoonColectionView.addGestureRecognizer(swipeGesture)
-    
     }
     
-    @objc func swipeToChangeDate(){
-        
-    }
-    
-    
-    
+    // Set up Nav bar.
     private func navigtionbarSetup(){
-        navigationItem.title = "Naver Webtoon"
+        navigationItem.title = MainViewControllerConstraints.navigationTitle
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: cookieButton())
         navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: searchButton()), UIBarButtonItem(customView: smileButton())]
-      
     }
-    
+    // Nav bar cookie Button
     private func cookieButton() -> UIButton{
         let cookieButton = UIButton(type: .system)
         cookieButton.setTitle("🍪", for: .normal)
-        cookieButton.titleLabel?.font = .systemFont(ofSize: 20)
-        cookieButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        cookieButton.titleLabel?.font = .systemFont(ofSize: MainViewControllerConstraints.navigationBarButtonFontSize)
+        cookieButton.frame = CGRect(x: MainViewControllerConstraints.navigationBarFrameOrigin.x, y: MainViewControllerConstraints.navigationBarFrameOrigin.y, width: MainViewControllerConstraints.navigationBarButtonFrameSize, height: MainViewControllerConstraints.navigationBarButtonFrameSize)
         return cookieButton
     }
-    
+    // Nav bar smile Button
     private func smileButton() -> UIButton{
         let interestButton = UIButton(type: .system)
         interestButton.setTitle("😀", for: .normal)
-        interestButton.titleLabel?.font = .systemFont(ofSize: 20)
-        interestButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        interestButton.titleLabel?.font = .systemFont(ofSize: MainViewControllerConstraints.navigationBarButtonFontSize)
+        interestButton.frame = CGRect(x: MainViewControllerConstraints.navigationBarFrameOrigin.x
+                                      , y: MainViewControllerConstraints.navigationBarFrameOrigin.y, width: MainViewControllerConstraints.navigationBarButtonFrameSize, height: MainViewControllerConstraints.navigationBarButtonFrameSize)
         return interestButton
     }
-    
+    // Nav bar search Button
     private func searchButton() -> UIButton{
         let moreButton = UIButton(type: .system)
         moreButton.setTitle("🔍", for: .normal)
-        moreButton.titleLabel?.font = .systemFont(ofSize: 30)
+        moreButton.titleLabel?.font = .systemFont(ofSize: MainViewControllerConstraints.navigationBarButtonFontSize)
         moreButton.contentHorizontalAlignment = .right
-        moreButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        moreButton.frame = CGRect(x: MainViewControllerConstraints.navigationBarFrameOrigin.x, y: MainViewControllerConstraints.navigationBarFrameOrigin.y, width: MainViewControllerConstraints.navigationBarButtonFrameSize, height: MainViewControllerConstraints.navigationBarButtonFrameSize)
         return moreButton
     }
-
-    
-    
     
     
     // MARK: Setting Upper Collection View and Webtoon Collection View.
+    
+    
+    // automatic scrolling upperView image to next image.
     private func slideUpperView(){
         DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(timeInterval: TimeInterval(MainViewControllerConstraints.upperViewTimeInterval), target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
     }
     
+    // configureing UpperView
     private func configureUpperView(){
         upperCollectionView.dataSource = self
         upperCollectionView.delegate = self
     }
     
+    // configureing webtoon collectionView.
     private func configureWebtoonCollectionView(){
         webtoonColectionView.dataSource = self
         webtoonColectionView.delegate = self
@@ -109,13 +101,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     private let defaultUpperViewHeight : CGFloat = 260
-    private let statusbarHeight = UIApplication.shared.statusBarFrame.height
-    
-    
-    //    func changeNavigationBarHeight(height : CGFloat ) {
-    //        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0)
-    //
-    //    }
+    private let additionalSpaceForNavBarShow : CGFloat = 20
     
     @IBOutlet weak var upperCollectionViewHeight: NSLayoutConstraint!
     
@@ -134,7 +120,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
               
            
             // nav bar sliding.
-            if scrollView.contentOffset.y > -defaultUpperViewHeight + 15{
+            if scrollView.contentOffset.y > -defaultUpperViewHeight + additionalSpaceForNavBarShow{
                 navigationController?.setNavigationBarHidden(false, animated: true)
             }else{
                 navigationController?.setNavigationBarHidden(true, animated: true)
@@ -143,15 +129,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             
 
             if scrollView.contentOffset.y < 0  && scrollView.contentOffset.y > -defaultUpperViewHeight{
-                // nav bar 상황에 따라.
-//                if abs(scrollView.contentOffset.y) <= navigationController!.navigationBar.frame.maxY {
-//                    // scrollview의 bound.y가 navigationController!.navigationBar.frame.maxY 보다 작거나 할때 inset 항상 유지.
-//                    scrollView.contentInset.top = navigationController!.navigationBar.frame.maxY
-//                }else{
-//                    upperCollectionViewHeight.constant = -scrollView.contentOffset.y
-//                    scrollView.contentInset.top = -scrollView.contentOffset.y
-//                }
-                
                 if scrollView.safeAreaInsets.top >= -scrollView.contentOffset.y{
                     upperCollectionViewHeight.constant = 0
                     scrollView.contentInset.top = navigationController!.navigationBar.frame.maxY
@@ -170,7 +147,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     // MARK: Configure Upper Collection View.
-    
     @IBOutlet weak var upperCollectionView: UICollectionView!
     let upperImage = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"), UIImage(named: "5")]
     var timer = Timer()
@@ -193,10 +169,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     var model = Model()
     
+    // headerDelegate to change WebtoonCollection view data source.
     func changeDate(index: Int) {
         chosenDate = index
     }
     
+    // control WebtoonCollection view's data source.
     var chosenDate : Int = 0{
         didSet{
             webtoonColectionView.reloadData()
@@ -217,7 +195,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "webtoon thumnail", for: indexPath) as! WebToonCollectionViewCell
             
             cell.layer.borderColor = UIColor.gray.cgColor
-            cell.layer.borderWidth = 0.3
+            cell.layer.borderWidth = MainViewControllerConstraints.webtoonCollectionViewBorderWidth
             
             cell.thumnailUrl = model.webtoon[chosenDate][indexPath.row].webtoonThumNailUrl
             cell.title.text = model.webtoon[chosenDate][indexPath.row].webtoonTitle
@@ -238,7 +216,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
-    
+    // Segue Part.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == webtoonColectionView{
             performSegue(withIdentifier: "webtoon list", sender: self)
@@ -277,7 +255,7 @@ extension MainViewController : UICollectionViewDelegateFlowLayout{
         }else{
             let widthForLayout = webtoonColectionView.frame.maxX / 3
             
-            return CGSize(width: widthForLayout, height: 200)
+            return CGSize(width: widthForLayout, height: MainViewControllerConstraints.webtoonCollectionViewCellHeight)
         }
     }
     
@@ -321,6 +299,4 @@ extension MainViewController : UICollectionViewDelegateFlowLayout{
             assert(false, "Invalid element type")
         }
     }
-    
 }
-

@@ -15,6 +15,7 @@ class EpisodeTableViewCell: UITableViewCell {
     @IBOutlet weak var episodeDate: UILabel!
     
     
+    // thumnailUrl if set call fetchImage.
     var thumnailUrl : URL?{
         didSet {
             if thumnailUrl != nil && (oldValue != thumnailUrl) {
@@ -23,6 +24,7 @@ class EpisodeTableViewCell: UITableViewCell {
         }
     }
 
+    // fetching image from thumnailUrl and assgint image to episodeImage.
     private func fetchImage() {
         if let url = thumnailUrl {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -41,7 +43,4 @@ class EpisodeTableViewCell: UITableViewCell {
             }
         }
     }
-
-    
-    
 }

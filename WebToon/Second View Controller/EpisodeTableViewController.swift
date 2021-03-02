@@ -21,7 +21,10 @@ class EpisodeTableViewController: UITableViewController {
     }
     
 
+    // Webtoon model.
     var webtoon : WebtoonModel?
+    // Webtoon Info.
+    var stringDate : String?
     var date : Int?{
         didSet{
             if date == 0{
@@ -42,58 +45,59 @@ class EpisodeTableViewController: UITableViewController {
         }
     }
     
-    var stringDate : String?
+    lazy var additionalView = additionalSpace()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
         configureTopAndBottom()
-        
-        
+
         navigationController?.additionalSafeAreaInsets = .zero
-        
-    
     }
     
     private func configureTopAndBottom(){
         navigtionbarSetup()
-        navigationController?.navigationBar.barTintColor = .brown
-        tableView.addSubview(additionalSpace())
+        tableView.addSubview(additionalView)
         tableView.tableHeaderView = headerView()
         tableView.tableFooterView = footerView()
         tableView.bringSubviewToFront(tableView.tableHeaderView!)
     }
     
-    // MARK: Configuring navigation tab bar.
+    // MARK: Configuring navigation bar.
     private func navigtionbarSetup(){
-        navigationController?.navigationBar.isTranslucent = false
-        
+        navigationController?.navigationBar.barTintColor = .brown
         navigationController?.navigationBar.topItem?.backButtonTitle = " "
         navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: moreButtonSetUp()), UIBarButtonItem(customView: interestButtonSetUp())]
     }
     
+    // Navigation Bar : interest button.
     private func interestButtonSetUp() -> UIButton{
         let interestButton = UIButton(type: .system)
         interestButton.setTitle("⊕ 관심", for: .normal)
-        interestButton.titleLabel?.font = .systemFont(ofSize: 20)
-        interestButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        interestButton.titleLabel?.font = .systemFont(ofSize: EpisodeTableViewControllerConstraints.navigationBarButtonFontSize)
+        interestButton.frame = EpisodeTableViewControllerConstraints.navigationBarButtonFrame
         return interestButton
     }
     
+    // Navigation Bar : more button.
     private func moreButtonSetUp() -> UIButton{
         let moreButton = UIButton(type: .system)
         moreButton.setTitle("⋮", for: .normal)
-        moreButton.titleLabel?.font = .systemFont(ofSize: 30)
+        moreButton.titleLabel?.font = .systemFont(ofSize: EpisodeTableViewControllerConstraints.navigationBarButtonFontSize)
         moreButton.contentHorizontalAlignment = .right
-        moreButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        moreButton.frame = EpisodeTableViewControllerConstraints.navigationBarButtonFrame
         return moreButton
     }
 
     
     // MARK: Change navigation bar according to its location.
-    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        // Make Nav bar Back Button's title to be webtoon's title if, if condition.
+        // Make Nav bar Back Button's title to be  "" if, else condition.
         if let titleView = tableView.tableHeaderView?.subviews[1]{
             if tableView.contentOffset.y  > titleView.frame.origin.y + titleView.frame.height - scrollView.safeAreaInsets.top{
                 navigationController?.navigationBar.backItem?.backButtonTitle = webtoon!.webtoonTitle
@@ -102,17 +106,13 @@ class EpisodeTableViewController: UITableViewController {
             }
         }
         
-        let viewToAdd = additionalSpace()
+        // Change UI according to scroll view's offset.
         if scrollView.contentOffset.y == -scrollView.safeAreaInsets.top{
+            additionalView.isHidden = false
             navigationController?.navigationBar.barTintColor = .brown
-            tableView.addSubview(viewToAdd)
             navigationController?.navigationBar.tintColor = .white
         }else{
-            for view in tableView.subviews{
-                if view.frame.height == 75{
-                    view.removeFromSuperview()
-                }
-            }
+            additionalView.isHidden = true
             navigationController?.navigationBar.barTintColor = .white
             navigationController?.navigationBar.tintColor = .black
         }
@@ -120,23 +120,18 @@ class EpisodeTableViewController: UITableViewController {
         tableView.bringSubviewToFront(tableView.tableHeaderView!)
     }
     
+    // Return a view that have same color with nav bar to look like real app.
     private func additionalSpace() -> UIView{
         let endOfNavigationBar = CGFloat(0)
-
-        let view = UIView(frame: CGRect(x: 0, y: endOfNavigationBar, width: tableView.frame.width, height: 75))
+        let view = UIView(frame: CGRect(x: 0, y: endOfNavigationBar, width: tableView.frame.width, height: EpisodeTableViewControllerConstraints.additionalSpaceHeight))
         view.backgroundColor = .brown
-
         return view
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // for all episodes need to add m.
-        performSegue(withIdentifier: "showWebtoon", sender: self)
-        changeNavigationBarHeight(height: 0)
-    }
     
-    func changeNavigationBarHeight(height : CGFloat ) {
-        self.navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: min(0,height), left: 0, bottom: 0, right: 0)
+    // If table selected, segue to its episode.
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showWebtoon", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -146,39 +141,35 @@ class EpisodeTableViewController: UITableViewController {
         }
     }
     
-
-
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return webtoon?.episodeArray.count ?? 0
+        return webtoon!.episodeArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "episodeCell", for: indexPath) as! EpisodeTableViewCell
         
-        cell.episodeImage.layer.cornerRadius = 5
-        
-        cell.episodeTitle.font = UIFont.systemFont(ofSize: 15)
-        cell.episodeRating.font = UIFont.systemFont(ofSize: 13)
+        // setting cell's desgin?
+        cell.episodeImage.layer.cornerRadius = EpisodeTableViewControllerConstraints.tabelViewCellImageCornerRadius
+        cell.episodeTitle.font = UIFont.systemFont(ofSize: EpisodeTableViewControllerConstraints.tabelViewCellTitleFont)
+        cell.episodeRating.font = UIFont.systemFont(ofSize: EpisodeTableViewControllerConstraints.tableViewCellOtherFonts)
         cell.episodeRating.textColor = .gray
-        cell.episodeDate.font = UIFont.systemFont(ofSize: 13)
+        cell.episodeDate.font = UIFont.systemFont(ofSize: EpisodeTableViewControllerConstraints.tableViewCellOtherFonts)
         cell.episodeDate.textColor = .gray
         
-        cell.thumnailUrl = webtoon?.episodeArray[indexPath.row].episodeThumnailImageUrl
-        cell.episodeDate.text = webtoon?.episodeArray[indexPath.row].episodeDate
-        cell.episodeTitle.text = webtoon?.episodeArray[indexPath.row].episodeTitle
-        if let rating = webtoon?.episodeArray[indexPath.row].episodeRaiting{
-            cell.episodeRating.text = "★" + rating
-        }
+        // putting actual info to properties.
+        cell.thumnailUrl = webtoon!.episodeArray[indexPath.row].episodeThumnailImageUrl
+        cell.episodeDate.text = webtoon!.episodeArray[indexPath.row].episodeDate
+        cell.episodeTitle.text = webtoon!.episodeArray[indexPath.row].episodeTitle
+        cell.episodeRating.text = "★" + webtoon!.episodeArray[indexPath.row].episodeRaiting
+
         return cell
     }
     
     
     
     // MARK: configuring table view header.
-    
     private func headerView() -> UIView{
         let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: tableView.frame.height / 3))
         
@@ -260,7 +251,6 @@ class EpisodeTableViewController: UITableViewController {
     }
     
     // MARK: configuring table view footer.
-    
     private func footerView() -> UIView{
         let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: tableView.frame.height / 6))
         

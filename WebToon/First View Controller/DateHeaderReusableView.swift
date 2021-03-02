@@ -5,6 +5,10 @@
 //  Created by Yundong Lee on 2021/02/16.
 //
 
+//
+// webtoon collection view header.
+//
+
 import UIKit
 
 class DateHeaderReusableView: UICollectionReusableView {
@@ -14,12 +18,13 @@ class DateHeaderReusableView: UICollectionReusableView {
             print("blankViewSize : \(blankView.frame)")
         }
     }
+    // scroll view setup.
     @IBOutlet weak var dateScroll: UIScrollView!{
         didSet{
-            dateScroll.contentSize = CGSize(width: 480, height: 40)
+            dateScroll.contentSize = CGSize(width: MainViewControllerConstraints.dateScrollViewContentWidth, height: MainViewControllerConstraints.dateLabelViewHeight)
             for xCoordinate in 0..<8{
                 let selectDate = UITapGestureRecognizer(target: self, action: #selector(selectDayOfWeek))
-                let label = UILabel(frame: CGRect(x: xCoordinate * 60, y: 0, width: 60, height: 40))
+                let label = UILabel(frame: CGRect(x: CGFloat(xCoordinate) * MainViewControllerConstraints.dateLabelViewWidth, y: 0, width: MainViewControllerConstraints.dateLabelViewWidth, height: MainViewControllerConstraints.dateLabelViewHeight))
                 label.isUserInteractionEnabled = true
                 label.addGestureRecognizer(selectDate)
                 labelArray.append(label)
@@ -44,11 +49,10 @@ class DateHeaderReusableView: UICollectionReusableView {
         
     }
     
-    var labelArray = [UILabel]()
+    private var labelArray = [UILabel]()
     private var selectedLabel : UILabel?
     
-    var chosenDate : Int = 5
-    
+    // show the chosen date.
     @objc func selectDayOfWeek(sender: UITapGestureRecognizer){
         switch sender.state {
         case .ended:
@@ -58,20 +62,17 @@ class DateHeaderReusableView: UICollectionReusableView {
                 selectedLabel?.backgroundColor = #colorLiteral(red: 0, green: 0.6358990073, blue: 0, alpha: 1)
                 if let index = labelArray.firstIndex(of: chosenLabel){
                     delegate?.changeDate(index: index)
-                    chosenDate = index
                 }
             }
         default:
             print("error")
         }
     }
-    
-    
     var delegate : headerDelegate?
 }
 
 
-
+// delegate to communicate with MainController.
 protocol headerDelegate {
     func changeDate(index : Int)
 }
