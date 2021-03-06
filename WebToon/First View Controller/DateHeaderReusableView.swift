@@ -13,11 +13,8 @@ import UIKit
 
 class DateHeaderReusableView: UICollectionReusableView {
     
-    @IBOutlet weak var blankView: UIView!{
-        didSet{
-            print("blankViewSize : \(blankView.frame)")
-        }
-    }
+    @IBOutlet weak var blankView: UIView!
+    
     // scroll view setup.
     @IBOutlet weak var dateScroll: UIScrollView!{
         didSet{

@@ -17,6 +17,7 @@ struct Model {
     var fridayWebtoon : [WebtoonModel] = []
     var saturdayWebtoon : [WebtoonModel] = []
     var sundayWebtoon : [WebtoonModel] = []
+    var endWebtoon : [WebtoonModel] = []
     
     init() {
         // MARK: monday init
@@ -104,6 +105,7 @@ struct Model {
         webtoon.append(fridayWebtoon)
         webtoon.append(saturdayWebtoon)
         webtoon.append(sundayWebtoon)
+        webtoon.append(endWebtoon)
     }
     
 }
