@@ -1,8 +1,8 @@
 # Cloning Naver Webtoon Aplication with Swift 
 
+This is a simple application created using Swift to mimic basic design and functionality of the official Naver Webtoon app. It used Python and Beautifulsoup to get actual data from the internet.
 
-## Why Clone Naver Webtoon
-After learning basic swift concepts, I wanted to make a real working app. After a while thinking of what app to make, I decided to make an app that I use most often. By this simple thought began to work on WebToon project, which cloens real Naver Webtoon Application.
+
 
 ## WebToon 실행 화면.
 
@@ -18,6 +18,7 @@ Main View Controller                    table view controller.                  
 
 
 ## WebToon 만들며 아쉬웠던 점들.
+
 
 
 ## WebToon 고칠 수 있는 것들?
