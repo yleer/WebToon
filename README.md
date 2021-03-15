@@ -9,7 +9,7 @@ This is a simple application created using Swift to mimic basic design and funct
 
 ![aa](https://user-images.githubusercontent.com/48948578/111141278-b1ec3c00-85c6-11eb-961a-93fd0fdfda6c.gif)
 ![aa](https://user-images.githubusercontent.com/48948578/111141958-78680080-85c7-11eb-8d3d-89cfa14d3e11.gif)
-
+![aa](https://user-images.githubusercontent.com/48948578/111142095-a51c1800-85c7-11eb-9b25-de70c05887b2.gif)
 
 
 ## WebToon 만들며 아쉬웠던 점들.
