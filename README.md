@@ -4,7 +4,7 @@ This is a simple application created using Swift to mimic basic design and funct
 
 
 
-## WebToon 실행 화면.
+## WebToon Preview.
 
 Main View Controller                    table view controller.                            episode content view contoreller
 
