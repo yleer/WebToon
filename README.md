@@ -6,7 +6,9 @@ This is a simple application created using Swift to mimic basic design and funct
 
 ## WebToon Preview.
 
-Main View Controller                    table view controller.                            episode content view contoreller
+
+![aa](https://user-images.githubusercontent.com/48948578/111141278-b1ec3c00-85c6-11eb-961a-93fd0fdfda6c.gif)
+
 
 
 
