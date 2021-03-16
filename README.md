@@ -11,9 +11,9 @@ This is a simple application created using Swift to mimic basic design and funct
 
 ## Basic idea.
 
-Get data of webtoon(thumnail images, episode urls, etc..) using beautifulSoup in Python. 
-Make model with the data.
-Provide data to collection view and table view.
+Get data of webtoon(thumnail images, episode urls, etc..) using beautifulSoup in Python. ->
+Make model with the data. ->
+Provide data to collection view and table view. ->
 Make UI look like real app.
 
 
