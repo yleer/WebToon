@@ -24,7 +24,7 @@ Make UI look like real app.
 2. Because i did't have actual webtoon data, I implement the last view controller using UIWebView. This caused my app to be little different from the real app. I wish i had real webtoon data so that i can make my web view be a scroll view instead. This will enable to add tap gesture which will more likely to look like real app.
 
 
-## Things can be improved.
+## Things could be improved.
 
 1. Add tab bar controller to look more like the real app.
 2. Add more data. Currently put only some of monday and tuesday webtoon data.
