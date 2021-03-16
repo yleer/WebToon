@@ -15,10 +15,9 @@ This is a simple application created using Swift to mimic basic design and funct
 
 ## WebToon 고칠 수 있는 것들?
 
-1.첫번째 view controller에 navigation bar 생겼다 없어지는거 실제 어플과는 차이 있음. inset 주는걸로 구현을 해봤지만 다음 view controller로 넘어갈때 nav bar가 없어지는 현상이 나타나 그냥 
-일정상태까지 collection view가 올라오면 nav bar hide하고 unhide로 구현해서 조금 아쉬움.
+1. In MainViewController the navigation bar acts little different from the real app. In real app, if scroll the collection view, nav bar moves down and up accordingly. However, in my app I put a limit(fixed height). If scroll over that limit navigation bar comes down, and if scroll down the limit navigation bar disapppears. I tried to make it work like real app by inseting navigtaion bar it self, but doing so made a problem. When segue on to the next view controller, navigation bar keeps the inset from the previuous view controller, making navigation bar unshown. 
 
-2. 첫번째 view controller에서 두번째 view controller로 넘어갈때 nav bar는 animation 되지 않는다. 이 부분 조금 아쉽다.
+2. When seguing from MainViewController to TableViewController navigation bar is not being animated. 
 
 3. 3번째
 
