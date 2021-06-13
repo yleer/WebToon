@@ -4,6 +4,33 @@ This is a simple application created using Swift to mimic basic design and funct
 
 <img src="https://user-images.githubusercontent.com/48948578/111142095-a51c1800-85c7-11eb-9b25-de70c05887b2.gif"  width="250" height="450">
 
+# Contents
++ [Why?](#why)
++ [Installation](#Installation)
++ [Usage](#Usage)
++ [How FoodChooser is made](#How-FoodChooser-is-made)
++ [Fixes](#Fixes)
+
+
+
+
+***
+### Why?
+
+
+***
+### Installation
+
+
+***
+### Usage
+
+
+
+
+***
+### How FoodChooser is made
+
 
 ## Basic idea.
 
