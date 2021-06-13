@@ -37,6 +37,13 @@ Provide data to collection view and table view. ->
 Make UI look like real app.
 
 
+> Data Structure
+>> asdf
+> Data Flow
+>> as as
+
+
+
 ## Problems while making app.
 
 1. In MainViewController the navigation bar acts little different from the real app. In real app, if scroll the collection view, nav bar moves down and up accordingly. However, in my app I put a limit(fixed height). If scroll over that limit navigation bar comes down, and if scroll down the limit navigation bar disapppears. I tried to make it work like real app by inseting navigtaion bar it self, but doing so made a problem. When segue on to the next view controller, navigation bar kept the inset from the previuous view controller, making navigation bar unshown. 
