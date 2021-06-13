@@ -2,11 +2,7 @@
 
 This is a simple application created using Swift to mimic basic design and functionality of the official Naver Webtoon app. It used Python and Beautifulsoup to get actual data from the internet.
 
-
-
-## WebToon Preview.
-
-![aa](https://user-images.githubusercontent.com/48948578/111142095-a51c1800-85c7-11eb-9b25-de70c05887b2.gif)
+<img src="https://user-images.githubusercontent.com/48948578/111142095-a51c1800-85c7-11eb-9b25-de70c05887b2.gif"  width="200" height="350">
 
 
 ## Basic idea.
