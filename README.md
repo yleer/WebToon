@@ -38,9 +38,9 @@ Make UI look like real app.
 
 
 > Data Structure
->> asdf
 > Data Flow
->> as as
+
+
 
 
 
