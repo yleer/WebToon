@@ -16,7 +16,7 @@ This is a simple application created using Swift to mimic basic design and funct
 
 ***
 ### Why?
-This project's purpose is to test what I can do using what I've learned so far. After learning Swift by flowing instruction from online lessions. I wanted to make a real app used by many people. Before making my own new app, I decided to clone an existing app. Becuase clonning will give me ideas of how the app will look and sturcutre of the app. I thought if I clone an app that I use daily, it will be maningfull, so I cloned Naver Webtoon App which I use daily.
+This project's purpose is to test what I can do using what I've learned so far. After learning Swift by flowing instruction from online lessions. I wanted to make a real app used by many people. Before making my own new app, I decided to clone an existing app. Becuase clonning will give me ideas of how the app will look and sturcutre of the app. I thought if I clone an app that I use daily, it will be maningful, so I cloned Naver Webtoon App which I use daily.
 
 
 ***
