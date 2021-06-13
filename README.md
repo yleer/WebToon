@@ -31,12 +31,6 @@ Just like the real Naver Webtoon, this app can be used to see webtoons.
 ***
 ### How WebToon is made
 
-Get data of webtoon(thumnail images, episode urls, etc..) using beautifulSoup in Python. ->
-Make model with the data. ->
-Provide data to collection view and table view. ->
-Make UI look like real app.
-
-
 1. Data Structure
 >+ Data - Contains data of webtoons : webtoon's thumnail image url, webtoon's description, webtoon episode's title, rating, url, thumnail image 
 >+ Episode - Makes Data's episode data into single Episode struct.
@@ -44,7 +38,10 @@ Make UI look like real app.
 >+ Model - Contains array of WebtoonModels by day.
 
 2. Data Flow
-
+>+ Get data of webtoon(thumnail images, episode urls, etc..) using beautifulSoup in Python. 
+>+ Make model with the data. 
+>+ Provide data to collection view and table view. 
+>+ Make UI look like real app.
 
 
 
