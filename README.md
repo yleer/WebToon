@@ -21,7 +21,7 @@ This project's purpose is to test what I can do using what I've learned so far. 
 ***
 ### Installation
 Simply install the project.
-> + Clone the project.    https://github.com/yleer/FoodChooser.git 
+> + Clone the project.    https://github.com/yleer/WebToon.git
 > + Or download the zip file.
 
 ***
