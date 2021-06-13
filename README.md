@@ -9,9 +9,6 @@ This is a simple application created using Swift to mimic basic design and funct
 + [Installation](#Installation)
 + [Usage](#Usage)
 + [How FoodChooser is made](#How-FoodChooser-is-made)
-+ [Fixes](#Fixes)
-
-
 
 
 ***
@@ -28,14 +25,11 @@ Simply install the project.
 ***
 ### Usage
 
-
+Just like the real Naver Webtoon, this app can be used to see webtoons. 
 
 
 ***
-### How FoodChooser is made
-
-
-## Basic idea.
+### How WebToon is made
 
 Get data of webtoon(thumnail images, episode urls, etc..) using beautifulSoup in Python. ->
 Make model with the data. ->
