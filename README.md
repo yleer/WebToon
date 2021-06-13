@@ -20,7 +20,9 @@ This is a simple application created using Swift to mimic basic design and funct
 
 ***
 ### Installation
-
+Simply install the project.
+> + Clone the project.    https://github.com/yleer/FoodChooser.git 
+> + Or download the zip file.
 
 ***
 ### Usage
