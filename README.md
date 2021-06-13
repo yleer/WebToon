@@ -9,6 +9,8 @@ This is a simple application created using Swift to mimic basic design and funct
 + [Installation](#Installation)
 + [Usage](#Usage)
 + [How FoodChooser is made](#How-FoodChooser-is-made)
++ [Problems while making app.](#Problems-while-making-app)
++ [Things could be improved.](#Things-could-be-improved)
 
 
 ***
@@ -41,20 +43,17 @@ Just like the real Naver Webtoon, this app can be used to see webtoons.
 >+ Get data of webtoon(thumnail images, episode urls, etc..) using beautifulSoup in Python. 
 >+ Make model with the data. 
 >+ Provide data to collection view and table view. 
->+ Make UI look like real app.
 
 
 
-
-
-## Problems while making app.
+### Problems while making app.
 
 1. In MainViewController the navigation bar acts little different from the real app. In real app, if scroll the collection view, nav bar moves down and up accordingly. However, in my app I put a limit(fixed height). If scroll over that limit navigation bar comes down, and if scroll down the limit navigation bar disapppears. I tried to make it work like real app by inseting navigtaion bar it self, but doing so made a problem. When segue on to the next view controller, navigation bar kept the inset from the previuous view controller, making navigation bar unshown. 
 
 2. Because i did't have actual webtoon data, I implement the last view controller using UIWebView. This caused my app to be little different from the real app. I wish i had real webtoon data so that i can make my web view be a scroll view instead. This will enable to add tap gesture which will more likely to look like real app.
 
 
-## Things could be improved.
+### Things could be improved.
 
 1. Add tab bar controller to look more like the real app.
 2. Add more data. Currently put only some of monday and tuesday webtoon data.
