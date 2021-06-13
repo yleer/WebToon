@@ -37,8 +37,13 @@ Provide data to collection view and table view. ->
 Make UI look like real app.
 
 
-> Data Structure
-> Data Flow
+1. Data Structure
+>+ Data
+>+ Episode
+>+ Model
+>+ WebtoonModel
+2. Data Flow
+
 
 
 
