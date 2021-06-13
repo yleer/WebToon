@@ -38,10 +38,11 @@ Make UI look like real app.
 
 
 1. Data Structure
->+ Data
->+ Episode
->+ Model
->+ WebtoonModel
+>+ Data - Contains data of webtoons : webtoon's thumnail image url, webtoon's description, webtoon episode's title, rating, url, thumnail image 
+>+ Episode - Makes Data's episode data into single Episode struct.
+>+ WebtoonModel - Contains array of Episode, which makes up a single Webootn.
+>+ Model - Contains array of WebtoonModels by day.
+
 2. Data Flow
 
 
